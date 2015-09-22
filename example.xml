@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<pessoas>
+  <pessoa tipo="F">
+    <nome>Manoel</nome>
+    <cidade>Palmas-TO</cidade>
+  </pessoa>
+  <pessoa tipo="F">
+    <nome>Breno</nome>
+    <cidade>Palmas-TO</cidade>
+  </pessoa>
+  <pessoa tipo="J">
+    <nome>UnB</nome>
+    <cidade>Brasília-DF</cidade>
+  </pessoa>  
+</pessoas>
