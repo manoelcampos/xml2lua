@@ -41,7 +41,7 @@ License:
 ========
 This code is freely distributable under the terms of the [Lua license](http://www.lua.org/copyright.html)
 
-Author:
+Authors:
 =======
   - Paul Chakravarti
     
@@ -51,8 +51,8 @@ Author:
 	
   -  Manoel Campos da Silva Filho
   
-	http://manoelcampos.com
+	<http://manoelcampos.com>
 	
-	http://about.me/manoelcampos
+	<http://about.me/manoelcampos>
 		
     22 Sep 2015
