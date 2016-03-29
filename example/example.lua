@@ -1,8 +1,9 @@
+#!/usr/bin/env lua
 ---Sample application to read a XML file and print it on the terminal.
 --@author Manoel Campos da Silva Filho - http://manoelcampos.com
 
-dofile("LuaXML/xml.lua")
-dofile("LuaXML/handler.lua")
+dofile("../xml.lua")
+dofile("../handler.lua")
 
 ---Recursivelly prints a table
 --@param tb The table to be printed
@@ -20,7 +21,6 @@ function printable(tb, level)
       end
   end  
 end
-
 
 local filename = "example.xml"
 local xmltext = ""
