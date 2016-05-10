@@ -6,8 +6,8 @@ This is an initial release of LuaXML - a native XML parser for Lua.
 The parser was written by Paul Chakravarti and originally available on [LuaUsers](http://lua-users.org/wiki/LuaXml).
 
 This version was adapted to work with Lua 5 and can be used in Lua application, including
-interactive Digital Television [Ginga NCL applications](http://gingancl.org.br/en) for the [Brazilian Digital Television System](http://forumsbtvd.org.br),
-worldwide known as [ISDB-T International or ISDB-Tb](https://en.wikipedia.org/wiki/ISDB-T_International) and [H.761 ITU-T recommendation](https://www.itu.int/rec/T-REC-H.761).
+interactive Digital Television [Ginga NCL applications](http://gingancl.org.br/en) for the [Brazilian Digital Television System](http://forumsbtvd.org.br) 
+(worldwide known as [ISDB-T International or ISDB-Tb](https://en.wikipedia.org/wiki/ISDB-T_International)) and [H.761 ITU-T recommendation](https://www.itu.int/rec/T-REC-H.761).
 
 The code (and documentation) is not complete as yet however it is usable
 and this release is indented to avoid potential duplication between efforts
