@@ -1,12 +1,14 @@
 
 # LuaXML-0.0.5 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
-This is an initial release of LuaXML - a native XML parser for Lua.s
-The parser was written by Paul Chakravarti and originally available on [LuaUsers](http://lua-users.org/wiki/LuaXml).
+LuaXML is XML parser written entirely in Lua which doesn't depend on any external C/C++ Library.
+There is an homonymous LuaXML module that relies on some C libraries and is available [here](https://github.com/LuaDist/luaxml).
 
 This version was adapted to work with Lua 5 and can be used in Lua application, including
 interactive Digital Television [Ginga NCL applications](http://gingancl.org.br/en) for the [Brazilian Digital Television System](http://forumsbtvd.org.br) 
 (worldwide known as [ISDB-T International or ISDB-Tb](https://en.wikipedia.org/wiki/ISDB-T_International)) and [H.761 ITU-T recommendation](https://www.itu.int/rec/T-REC-H.761).
+
+The original parser was written by Paul Chakravarti and is available on [LuaUsers](http://lua-users.org/wiki/LuaXml).
 
 The code (and documentation) is not complete yet, however it is usable and this release is indented to avoid potential duplication between efforts and get early feedback.
 
