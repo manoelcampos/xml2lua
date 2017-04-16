@@ -16,16 +16,16 @@ The API is relatively stable however there may be some detailed changes.
 
 The distribution comprises:
 
-    - README          : This file
-    - xml.lua         : Main XML parser module
-    - handler.lua     : Standard XML handlers
-    - testxml.lua     : Command line test tool
-    - xmlrpclib.lua   : XMLRPC marshaller/unmarshaller (incomplete and now probably superseeded)
-    - xmlrpc-lua.cgi  : Test XML-RPC server (CGI)
-    - cgi.lua         : CGI module to support XMLRPC server
-                      (will probably be packaged separately idc)
-    - cgitest.cgi     
-    - pretty.lua      : Lua pretty printer [23/02/2001 jcw@equi4.com]
+- README          : This file
+- xml.lua         : Main XML parser module
+- handler.lua     : Standard XML handlers
+- testxml.lua     : Command line test tool
+- xmlrpclib.lua   : XMLRPC marshaller/unmarshaller (incomplete and now probably superseeded)
+- xmlrpc-lua.cgi  : Test XML-RPC server (CGI)
+- cgi.lua         : CGI module to support XMLRPC server (will probably be packaged separately idc)
+- cgitest.cgi     
+- pretty.lua      : Lua pretty printer [23/02/2001 jcw@equi4.com]
+
 
 Most of the modules are relatively well documented in the source - the key ones are 'xml.lua' & 'handler.lua'. The 'testxml.lua' utility is also useful for testing the modules.
 
