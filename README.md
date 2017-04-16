@@ -44,4 +44,4 @@ This code is freely distributable under the terms of the [MIT license](LICENSE).
 Authors
 -------
   - Paul Chakravarti paulc@passtheaardvark.com
-  -  Manoel Campos da Silva Filho http://about.me/manoelcampos
+  - Manoel Campos da Silva Filho http://about.me/manoelcampos
