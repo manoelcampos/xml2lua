@@ -43,16 +43,5 @@ This code is freely distributable under the terms of the [MIT license](LICENSE).
 
 Authors
 -------
-  - Paul Chakravarti
-    
-    paulc@passtheaardvark.com
-	
-	28 Nov 2001
-	
-  -  Manoel Campos da Silva Filho
-  
-	<http://manoelcampos.com>
-	
-	<http://about.me/manoelcampos>
-		
-    10 May 2016
+  - Paul Chakravarti paulc@passtheaardvark.com
+  -  Manoel Campos da Silva Filho http://about.me/manoelcampos
