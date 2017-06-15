@@ -12,20 +12,18 @@
 dofile('xml.lua')
 dofile('handler.lua')
 dofile('pretty.lua')
-dofile('xmlrpclib.lua')
 
 -- Defaults
 _print = nil
 _simpletree = nil
 _dom = nil 
 _file = nil
-_xmlrpc = nil
 _debug = nil
 _ws = nil
 _noentity = nil
 
 _usage = [[
-textxml.lua [-print] [-simpletree] [-dom] [-xmlrpc] [-debug] 
+textxml.lua [-print] [-simpletree] [-dom] [-debug] 
             [-ws] [-noentity] [-help] [file]
 ]]
 
@@ -37,7 +35,6 @@ Options:
     -print          : Generate event dump (default)
     -simpletree     : Generate simple tree
     -dom            : Generate DOM-like tree
-    -xmlrpc         : Parse XML-RPC nethod call
     -debug          : Print debug info (filename/text)
     -ws             : Do not strip whitespace
     -noentity       : Do not expand entities
@@ -65,8 +62,6 @@ while arg[index] do
             _simpletree= 1
         elseif arg[index] == "-dom" then
             _dom= 1
-        elseif arg[index] == "-xmlrpc" then
-            _xmlrpc= 1
         elseif arg[index] == "-debug" then
             _debug = 1
         elseif arg[index] == "-ws" then
@@ -115,7 +110,7 @@ if _debug then
     io.write (xml.."\n")
 end
 
-if _print or not (_print or _dom or _simpletree or _print or _xmlrpc) then
+if _print or not (_print or _dom or _simpletree or _print) then
     io.write ( "----------- Print\n" )
     h = printHandler()
     x = xmlParser(h)
@@ -141,19 +136,3 @@ if _dom then
     pretty('root',h.root)
     write ( "-----------\n" )
 end
-
-if _xmlrpc then
-    io.write ( "----------- XMLRPC\n" )
-    h = simpleTreeHandler()
-    h.options = {noreduce={param=1,member=1}}
-    x = xmlParser(h)
-    x:parse(xml)
-    rpc =  xmlrpclib()
-    method,params = rpc:parseMethodCall(h.root)
-    print("Method:",method)
-    print("Params:")
-    pretty("xmlrpc",params)
-end
-
-
-
