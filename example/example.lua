@@ -43,8 +43,8 @@ xmlparser:parse(xmltext)
 --printable(xmlhandler.root)
 
 --Manually prints the table (since the XML structure for this example is previously known)
-for k, p in pairs(xmlhandler.root.pessoas.pessoa) do
-  print("Name:", p.nome, "City:", p.cidade, "Type:", p._attr.tipo)
+for k, p in pairs(xmlhandler.root.people.person) do
+  print("Name:", p.name, "City:", p.city, "Type:", p._attr.type)
 end
 
 
