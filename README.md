@@ -34,8 +34,42 @@ quite as well packaged/docuemnted as I would like. I will be working on fixing t
 
 How to use
 ----------
+A simplified example which parses an XML directly from an string is presented below:
 
-An example of how to use the library is available [here](example).
+```lua
+dofile("xml.lua")
+dofile("handler.lua")
+
+local xmltext = [[
+<people>
+  <person type="P">
+    <name>Manoel</name>
+    <city>Palmas-TO</city>
+  </person>
+  <person type="P">
+    <name>Breno</name>
+    <city>Palmas-TO</city>
+  </person>
+</people>    
+]]
+
+--Instantiate the object the states the XML file as a Lua table
+local xmlhandler = simpleTreeHandler()
+
+--Instantiate the object that parses the XML to a Lua table
+local xmlparser = xmlParser(xmlhandler)
+xmlparser:parse(xmltext)
+
+--Recursivelly prints the table
+--printable(xmlhandler.root)
+
+--Manually prints the table (since the XML structure for this example is previously known)
+for k, p in pairs(xmlhandler.root.people.person) do
+  print("Name:", p.name, "City:", p.city, "Type:", p._attr.type)
+end
+```
+
+A complete example of how to use the library is available [here](example). 
 
 License
 -------
