@@ -42,9 +42,9 @@ xmlparser:parse(xmltext)
 --Recursivelly prints the table
 --printable(xmlhandler.root)
 
---Manually prints the table (once that the XML structure for this example is previously known)
+--Manually prints the table (since the XML structure for this example is previously known)
 for k, p in pairs(xmlhandler.root.pessoas.pessoa) do
-  print("Nome:", p.nome, "Cidade:", p.cidade, "Tipo:", p._attr.tipo)
+  print("Name:", p.nome, "City:", p.cidade, "Type:", p._attr.tipo)
 end
 
 
