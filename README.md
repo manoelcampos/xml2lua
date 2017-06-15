@@ -20,10 +20,6 @@ The distribution comprises:
 - xml.lua         : Main XML parser module
 - handler.lua     : Standard XML handlers
 - testxml.lua     : Command line test tool
-- xmlrpclib.lua   : XMLRPC marshaller/unmarshaller (incomplete and now probably superseeded)
-- xmlrpc-lua.cgi  : Test XML-RPC server (CGI)
-- cgi.lua         : CGI module to support XMLRPC server (will probably be packaged separately idc)
-- cgitest.cgi     
 - pretty.lua      : Lua pretty printer [23/02/2001 jcw@equi4.com]
 
 
