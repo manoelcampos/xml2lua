@@ -60,9 +60,6 @@ local xmlhandler = simpleTreeHandler()
 local xmlparser = xmlParser(xmlhandler)
 xmlparser:parse(xmltext)
 
---Recursivelly prints the table
---printable(xmlhandler.root)
-
 --Manually prints the table (since the XML structure for this example is previously known)
 for k, p in pairs(xmlhandler.root.people.person) do
   print("Name:", p.name, "City:", p.city, "Type:", p._attr.type)
