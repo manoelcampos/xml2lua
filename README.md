@@ -16,12 +16,10 @@ The API is relatively stable however there may be some detailed changes.
 
 The distribution comprises:
 
-- README          : This file
-- xml.lua         : Main XML parser module
-- handler.lua     : Standard XML handlers
-- testxml.lua     : Command line test tool
-- pretty.lua      : Lua pretty printer [23/02/2001 jcw@equi4.com]
-
+- xml.lua: Main XML parser module
+- handler.lua: Standard XML handlers to convert XML string to another formats
+- testxml.lua: Command line test tool
+- pretty.lua: Lua pretty printer [23/02/2001 jcw@equi4.com]
 
 Most of the modules are relatively well documented in the source - the key ones are 'xml.lua' & 'handler.lua'. The 'testxml.lua' utility is also useful for testing the modules.
 
@@ -30,7 +28,7 @@ quite as well packaged/docuemnted as I would like. I will be working on fixing t
 
 How to use
 ----------
-A simplified example which parses an XML directly from an string is presented below:
+A simplified example which parses an XML directly from a string is presented below:
 
 ```lua
 dofile("xml.lua")
@@ -42,17 +40,17 @@ local xmltext = [[
     <name>Manoel</name>
     <city>Palmas-TO</city>
   </person>
-  <person type="P">
-    <name>Breno</name>
-    <city>Palmas-TO</city>
-  </person>
+  <person type="J">
+    <name>University of Brasília</name>
+    <city>Brasília-DF</city>
+  </person>  
 </people>    
 ]]
 
---Instantiate the object the states the XML file as a Lua table
+--Instantiate an object to to convert the XML to a Lua table
 local xmlhandler = simpleTreeHandler()
 
---Instantiate the object that parses the XML to a Lua table
+--Instantiate the parser to actually perform the conversion
 local xmlparser = xmlParser(xmlhandler)
 xmlparser:parse(xmltext)
 
