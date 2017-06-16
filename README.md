@@ -21,11 +21,6 @@ The distribution comprises:
 - testxml.lua: Command line test tool
 - pretty.lua: Lua pretty printer [23/02/2001 jcw@equi4.com]
 
-Most of the modules are relatively well documented in the source - the key ones are 'xml.lua' & 'handler.lua'. The 'testxml.lua' utility is also useful for testing the modules.
-
-This is all being released a bit earlier than I would have liked due to all the current XML related activity on lua-l and as a result isnt
-quite as well packaged/docuemnted as I would like. I will be working on fixing this asp.
-
 How to use
 ----------
 A simplified example which parses an XML directly from a string is presented below:
