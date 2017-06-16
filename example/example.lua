@@ -32,7 +32,7 @@ else
   error(e)
 end
 
---Instantiate an object to to convert the XML to a Lua table
+--Instantiate an object to convert the XML to a Lua table
 local xmlhandler = simpleTreeHandler()
 
 --Instantiate the parser to actually perform the conversion
