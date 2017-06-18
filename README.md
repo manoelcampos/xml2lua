@@ -13,6 +13,15 @@ The code (and documentation) is not complete yet, however it is usable and this 
 
 The API is relatively stable however there may be some detailed changes.
 
+# Installation
+If you clone this repository, you are download all the module source code and can run the examples directly.
+However, if you want to use the module inside your own project, the best way is to download it using 
+LuaRocks at the command line:
+
+```bash
+luarocks install xml2lua
+```
+
 # How to use
 A simplified example which parses an XML directly from a string is presented below:
 
