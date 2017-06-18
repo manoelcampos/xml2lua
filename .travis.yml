@@ -9,4 +9,4 @@ script:
   - luarocks pack xml2lua-*.rockspec
   #Required for "luarocks upload" command
   - luarocks install dkjson --local
-  - luarocks upload xml2lua-*.rockspec --api-key=$LUA_ROCKS_API_KEY
+  - luarocks upload xml2lua-*.rockspec --force --api-key=$LUA_ROCKS_API_KEY
