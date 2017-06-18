@@ -289,7 +289,7 @@ xmlParser = function(handler)
                         end
                     end
                     extstart,extend,endt2 = string.find(str,self._TAGEXT,endmatch+1)
-                    tagstr = tagstr .. string.sub(string,endmatch,extend-1)
+                    tagstr = tagstr .. string.sub(str,endmatch,extend-1)
                     if not match then 
                         self:_err(self._errstr.xmlErr,pos)
                     end 
