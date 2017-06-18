@@ -1,0 +1,12 @@
+#in fact the language is lua, but travis doesn't support it directly
+language: python
+before_script:
+  - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu artful universe" -y
+  - sudo apt-get -qq update
+  - sudo apt-get install -y luarocks
+
+script: 
+  - luarocks pack xml2lua-*.rockspec
+  #Required for "luarocks upload" command
+  - luarocks install dkjson --local
+  - luarocks upload xml2lua-*.rockspec --api-key=$LUA_ROCKS_API_KEY

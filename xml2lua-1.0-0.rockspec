@@ -1,7 +1,8 @@
 package = "xml2lua"
 version = "1.0-0"
 source = {
-   url = "https://github.com/manoelcampos/xml2lua"
+   url = "git://github.com/manoelcampos/xml2lua",
+   tag = "v1.0"
 }
 description = {
    summary = "An XML Parser written entirely in Lua 5.",

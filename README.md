@@ -1,5 +1,5 @@
 
-# xml2lua-1.0-0 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+# xml2lua-1.0-0 [![Build Status](https://travis-ci.org/manoelcampos/xml2lua.svg?branch=master)](https://travis-ci.org/manoelcampos/xml2lua) [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
 xml2lua is an XML parser written entirely in Lua which doesn't depend on any external C/C++ library. 
 
