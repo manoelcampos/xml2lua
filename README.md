@@ -1,5 +1,5 @@
 
-# LuaXML-0.0.5 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+# LuaXML-1.0.0 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
 LuaXML is XML parser written entirely in Lua which doesn't depend on any external C/C++ library. 
 It isn't to be confused with the homonymous LuaXML module that relies on some C libraries and is available [here](https://github.com/LuaDist/luaxml).
@@ -14,22 +14,15 @@ The code (and documentation) is not complete yet, however it is usable and this 
 
 The API is relatively stable however there may be some detailed changes.
 
-The distribution comprises:
-
-- xml.lua: Main XML parser module
-- handler.lua: Standard XML handlers to convert XML string to another formats
-- testxml.lua: Command line test tool
-- pretty.lua: Lua pretty printer [23/02/2001 jcw@equi4.com]
-
-How to use
-----------
+# How to use
 A simplified example which parses an XML directly from a string is presented below:
 
 ```lua
-dofile("xml.lua")
-dofile("handler.lua")
+require("luaxml")
+--Uses a handler that converts the XML to a Lua table
+local handler = require("xmlhandler/tree")
 
-local xmltext = [[
+local xml = [[
 <people>
   <person type="P">
     <name>Manoel</name>
@@ -42,26 +35,25 @@ local xmltext = [[
 </people>    
 ]]
 
---Instantiate an object to convert the XML to a Lua table
-local xmlhandler = simpleTreeHandler()
-
---Instantiate the parser to actually perform the conversion
-local xmlparser = xmlParser(xmlhandler)
-xmlparser:parse(xmltext)
+--Instantiates the XML parser
+local parser = luaxml.parser(handler)
+parser:parse(xml)
 
 --Manually prints the table (since the XML structure for this example is previously known)
-for k, p in pairs(xmlhandler.root.people.person) do
+for k, p in pairs(handler.root.people.person) do
   print("Name:", p.name, "City:", p.city, "Type:", p._attr.type)
 end
 ```
 
-A complete example of how to use the library is available [here](example). 
+There are some examples in the root directory, such as the [example1.lua](example1.lua). 
 
-License
--------
+# Command line tool
+You can use a command line tool to try parsing XML files.
+Execute `lua testxml.lua -help` on the terminal for more details.
+
+# License
 This code is freely distributable under the terms of the [MIT license](LICENSE).
 
-Authors
--------
+# Authors
   - Paul Chakravarti paulc@passtheaardvark.com
   - Manoel Campos da Silva Filho http://about.me/manoelcampos

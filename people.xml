@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<people>
+  <person type="P">
+    <name>Manoel</name>
+    <city>Palmas-TO</city>
+  </person>
+  <person type="P">
+    <name>Breno</name>
+    <city>Palmas-TO</city>
+  </person>
+  <person type="J">
+    <name>University of Brasília</name>
+    <city>Brasília-DF</city>
+  </person>  
+</people>

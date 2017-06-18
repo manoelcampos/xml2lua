@@ -1,4 +1,5 @@
-#!/usr/bin/lua
+#!/usr/bin/env lua
+
 ---Simple command line test parser - applies handler[s] specified
 -- to XML file (or STDIN) and dumps results<br/>
 --
@@ -9,9 +10,10 @@
 -- Initial Import
 --
 
-dofile('xml.lua')
-dofile('handler.lua')
-dofile('pretty.lua')
+require("luaxml")
+local treeHandler = require("xmlhandler/tree")
+local domHandler = require("xmlhandler/dom")
+local printHandler = require("xmlhandler/print")
 
 -- Defaults
 _print = nil
@@ -70,16 +72,16 @@ while arg[index] do
             _noentity = 1
         elseif arg[index] == "-help" then
             print(_usage)
-            exit()
+            return
         else 
             print(_usage)
-            exit()
+            return
         end
     else 
         -- Filename is last argument if present
         if arg[index+1] then
             print(_usage)
-            exit()
+            return
         else 
             _file = arg[index]
         end
@@ -94,13 +96,7 @@ if _file then
     end
     --xml = read(openfile(_file,"r"),"*a")
 
-    local f, e = io.open(_file, "r")
-    if f then
-      xml = f:read("*a")
-    else 
-      error(e)
-    end
-
+    xml = luaxml.loadFile(_file)
 else
     xml = read("*a")
 end
@@ -112,27 +108,27 @@ end
 
 if _print or not (_print or _dom or _simpletree or _print) then
     io.write ( "----------- Print\n" )
-    h = printHandler()
-    x = xmlParser(h)
+    h = printHandler
+    x = luaxml.parser(h)
     setOptions(x)
     x:parse(xml)
 end
 
 if _simpletree then
     io.write ( "----------- SimpleTree\n" )
-    h = simpleTreeHandler()
-    x = xmlParser(h)
+    h = treeHandler
+    x = luaxml.parser(h)
     setOptions(x)
     x:parse(xml)
-    pretty('root',h.root)
+    luaxml.printable(h.root)
 end
 
 if _dom then
     io.write ( "----------- Dom\n" )
-    h = domHandler()
-    x = xmlParser(h)
+    h = domHandler
+    x = luaxml.parser(h)
     setOptions(x)
     x:parse(xml)
-    pretty('root',h.root)
-    write ( "-----------\n" )
+    pretty('root', h.root)
+    write( "-----------\n")
 end
