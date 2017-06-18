@@ -3,14 +3,14 @@
 ---Sample application to read a XML file and print it on the terminal.
 --@author Manoel Campos da Silva Filho - http://manoelcampos.com
 
-require("luaxml")
+require("xml2lua")
 --Uses a handler that converts the XML to a Lua table
 local handler = require("xmlhandler/tree")
 
-local xml = luaxml.loadFile("people.xml")
+local xml = xml2lua.loadFile("people.xml")
 
 --Instantiates the XML parser
-local parser = luaxml.parser(handler)
+local parser = xml2lua.parser(handler)
 parser:parse(xml)
 
 --Manually prints the table (since the XML structure for this example is previously known)
@@ -19,7 +19,7 @@ for k, p in pairs(handler.root.people.person) do
 end
 
 --Recursivelly prints the table in an easy-to-ready format
---luaxml.printable(handler.root)
+--xml2lua.printable(handler.root)
 
 --Recursivelly prints the table in a more structured way
---print(luaxml.showTable(handler.root))
+--print(xml2lua.showTable(handler.root))

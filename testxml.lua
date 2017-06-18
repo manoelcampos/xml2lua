@@ -10,7 +10,7 @@
 -- Initial Import
 --
 
-require("luaxml")
+require("xml2lua")
 local treeHandler = require("xmlhandler/tree")
 local domHandler = require("xmlhandler/dom")
 local printHandler = require("xmlhandler/print")
@@ -96,7 +96,7 @@ if _file then
     end
     --xml = read(openfile(_file,"r"),"*a")
 
-    xml = luaxml.loadFile(_file)
+    xml = xml2lua.loadFile(_file)
 else
     xml = read("*a")
 end
@@ -109,7 +109,7 @@ end
 if _print or not (_print or _dom or _simpletree or _print) then
     io.write ( "----------- Print\n" )
     h = printHandler
-    x = luaxml.parser(h)
+    x = xml2lua.parser(h)
     setOptions(x)
     x:parse(xml)
 end
@@ -117,18 +117,18 @@ end
 if _simpletree then
     io.write ( "----------- SimpleTree\n" )
     h = treeHandler
-    x = luaxml.parser(h)
+    x = xml2lua.parser(h)
     setOptions(x)
     x:parse(xml)
-    luaxml.printable(h.root)
+    xml2lua.printable(h.root)
 end
 
 if _dom then
     io.write ( "----------- Dom\n" )
     h = domHandler
-    x = luaxml.parser(h)
+    x = xml2lua.parser(h)
     setOptions(x)
     x:parse(xml)
-    pretty('root', h.root)
+    xml2lua.printable(h.root)
     write( "-----------\n")
 end

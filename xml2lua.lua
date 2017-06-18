@@ -96,7 +96,7 @@ local _G, print, string, table, pairs, type, tostring, tonumber, error, io, setm
       = 
       _G, print, string, table, pairs, type, tostring, tonumber, error, io, setmetatable, getmetatable
 
-module "luaxml"
+module "xml2lua"
 
 ---Converts the decimal code of a character to its corresponding char
 --if it's a graphical char, otherwise, returns the HTML ISO code
@@ -248,12 +248,12 @@ XmlParser = {
 --@param handler Handler module to be used to convert the XML string
 --to another formats. See the available handlers at the handler directory.
 -- Usually you get an instance to a handler module using, for instance:
--- local handler = require("luaxml/handler/tree").
+-- local handler = require("xml2lua/handler/tree").
 --@return a XmlParser object used to parse the XML
 --@see XmlParser
 function parser(handler)     
-    if handler == _G["luaxml"] then
-        error("You must call luaxml.parse(handler) instead of luaxml:parse(handler)")
+    if handler == _G["xml2lua"] then
+        error("You must call xml2lua.parse(handler) instead of xml2lua:parse(handler)")
     end
 
     local obj = {

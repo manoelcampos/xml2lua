@@ -1,8 +1,7 @@
 
-# LuaXML-1.0.0 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+# xml2lua-1.0.0 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
-LuaXML is XML parser written entirely in Lua which doesn't depend on any external C/C++ library. 
-It isn't to be confused with the homonymous LuaXML module that relies on some C libraries and is available [here](https://github.com/LuaDist/luaxml).
+xml2lua is an XML parser written entirely in Lua which doesn't depend on any external C/C++ library. 
 
 This version was adapted to work with Lua 5 and can be used in Lua applications, including
 interactive Digital Television [Ginga NCL applications](http://gingancl.org.br/en) for the [Brazilian Digital Television System](http://forumsbtvd.org.br) 
@@ -18,7 +17,7 @@ The API is relatively stable however there may be some detailed changes.
 A simplified example which parses an XML directly from a string is presented below:
 
 ```lua
-require("luaxml")
+require("xml2lua")
 --Uses a handler that converts the XML to a Lua table
 local handler = require("xmlhandler/tree")
 
@@ -36,7 +35,7 @@ local xml = [[
 ]]
 
 --Instantiates the XML parser
-local parser = luaxml.parser(handler)
+local parser = xml2lua.parser(handler)
 parser:parse(xml)
 
 --Manually prints the table (since the XML structure for this example is previously known)

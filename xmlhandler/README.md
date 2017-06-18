@@ -8,8 +8,8 @@ There are currently 3 available handlers:
 
 # Usage
 To get a handler instance you must call, for instance, `handler = require("xmlhandler/tree")`.
-Then, you have to use one the handler instance when getting an instance of the XML parser using `parser = luaxml.parser(handler)`.
-Notice the module `luaxml` should have been loaded before using `require("luaxml")`.
+Then, you have to use one the handler instance when getting an instance of the XML parser using `parser = xml2lua.parser(handler)`.
+Notice the module `xml2lua` should have been loaded before using `require("xml2lua")`.
 This way, the handler is called internally when the `parser:parse(xml)` function is called.
 
 Check the documentation on the root directory for complete examples.
