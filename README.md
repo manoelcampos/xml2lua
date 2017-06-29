@@ -4,7 +4,7 @@
 xml2lua is an XML parser written entirely in Lua which doesn't depend on any external C/C++ library. 
 
 This version was adapted to work with Lua 5 and can be used in Lua applications, including
-interactive Digital Television (DTV) [Ginga NCL applications](http://gingancl.org.br/en) for the [Brazilian DTV System](http://forumsbtvd.org.br) 
+interactive Digital Television (DTV) [Ginga NCL applications](http://gingancl.org.br/en) for the [Brazilian DTV System](http://www.dtv.org.br) 
 (worldwide known as [ISDB-T International or ISDB-Tb](https://en.wikipedia.org/wiki/ISDB-T_International)).
 
 The original parser was written by Paul Chakravarti and is available on [LuaUsers](http://lua-users.org/wiki/LuaXml).
