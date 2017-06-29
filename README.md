@@ -9,14 +9,14 @@ interactive Digital Television [Ginga NCL applications](http://gingancl.org.br/e
 
 The original parser was written by Paul Chakravarti and is available on [LuaUsers](http://lua-users.org/wiki/LuaXml).
 
-The code (and documentation) is not complete yet, however it is usable and this release is indented to avoid potential duplication between efforts and get early feedback.
+The code (and documentation) is not complete yet, however it is usable and this release is intended to avoid potential duplication between efforts and get early feedback.
 
 The API is relatively stable however there may be some detailed changes.
 
 # Installation
 If you clone this repository, you are download all the module source code and can run the examples directly.
 However, if you want to use the module inside your own project, the best way is to download it using 
-LuaRocks at the command line:
+[LuaRocks](http://luarocks.org) at the command line:
 
 ```bash
 luarocks install xml2lua
@@ -53,7 +53,7 @@ for k, p in pairs(handler.root.people.person) do
 end
 ```
 
-There are some examples in the root directory, such as the [example1.lua](example1.lua). 
+There are some examples such as the [example1.lua](example1.lua). 
 
 # Command line tool
 You can use a command line tool to try parsing XML files.
