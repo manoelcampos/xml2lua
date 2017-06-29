@@ -48,7 +48,7 @@ local parser = xml2lua.parser(handler)
 parser:parse(xml)
 
 --Manually prints the table (since the XML structure for this example is previously known)
-for k, p in pairs(handler.root.people.person) do
+for i, p in pairs(handler.root.people.person) do
   print("Name:", p.name, "City:", p.city, "Type:", p._attr.type)
 end
 ```
