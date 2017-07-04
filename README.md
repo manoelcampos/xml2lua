@@ -16,7 +16,7 @@ The API is relatively stable however there may be some detailed changes.
 # Installation
 If you clone this repository, you are download all the module source code and can run the examples directly.
 However, if you want to use the module inside your own project, the best way is to download it using 
-[LuaRocks](http://luarocks.org) at the command line:
+[LuaRocks](https://luarocks.org/modules/manoelcampos/xml2lua) at the command line:
 
 ```bash
 luarocks install xml2lua
