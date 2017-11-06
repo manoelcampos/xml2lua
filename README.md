@@ -28,7 +28,7 @@ A simplified example which parses an XML directly from a string is presented bel
 ```lua
 require("xml2lua")
 --Uses a handler that converts the XML to a Lua table
-local handler = require("xmlhandler/tree")
+local handler = require("xmlhandler.tree")
 
 local xml = [[
 <people>
