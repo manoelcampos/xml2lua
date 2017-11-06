@@ -29,7 +29,7 @@ local _G, print, string, table, pairs, type, tostring, tonumber, error, io
       = 
       _G, print, string, table, pairs, type, tostring, tonumber, error, io
 
-module "xmlhandler/dom"
+module "xmlhandler.dom"
 
 options = {commentNode=1, piNode=1, dtdNode=1, declNode=1}
 root = { _children = {n=0}, _type = "ROOT" }

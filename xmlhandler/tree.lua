@@ -49,7 +49,7 @@ local _G, print, string, table, pairs, type, tostring, tonumber, error, io
       = 
       _G, print, string, table, pairs, type, tostring, tonumber, error, io
 
-module "xmlhandler/tree"
+module "xmlhandler.tree"
 
 root = {}     
 stack = {root; n=1}

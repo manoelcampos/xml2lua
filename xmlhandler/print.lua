@@ -14,7 +14,7 @@ local _G, print, string, table, pairs, type, tostring, tonumber, error, io
       = 
       _G, print, string, table, pairs, type, tostring, tonumber, error, io
 
-module "xmlhandler/print"
+module "xmlhandler.print"
 
 function starttag(self, t, a, s, e) 
     io.write("Start    : "..t.."\n") 
