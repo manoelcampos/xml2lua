@@ -4,19 +4,19 @@
 xml2lua is an XML parser written entirely in Lua which doesn't depend on any external C/C++ library. 
 
 This version was adapted to work with Lua 5 and can be used in Lua applications, including
-interactive Digital Television [Ginga NCL applications](http://gingancl.org.br/en) for the [Brazilian Digital Television System](http://forumsbtvd.org.br) 
-(worldwide known as [ISDB-T International or ISDB-Tb](https://en.wikipedia.org/wiki/ISDB-T_International)) and [H.761 ITU-T recommendation](https://www.itu.int/rec/T-REC-H.761).
+interactive Digital Television (DTV) [Ginga NCL applications](http://gingancl.org.br/en) for the [Brazilian DTV System](http://www.dtv.org.br) 
+(worldwide known as [ISDB-T International or ISDB-Tb](https://en.wikipedia.org/wiki/ISDB-T_International)).
 
 The original parser was written by Paul Chakravarti and is available on [LuaUsers](http://lua-users.org/wiki/LuaXml).
 
-The code (and documentation) is not complete yet, however it is usable and this release is indented to avoid potential duplication between efforts and get early feedback.
+The code (and documentation) is not complete yet, however it is usable and this release is intended to avoid potential duplication between efforts and get early feedback.
 
 The API is relatively stable however there may be some detailed changes.
 
 # Installation
 If you clone this repository, you are download all the module source code and can run the examples directly.
 However, if you want to use the module inside your own project, the best way is to download it using 
-LuaRocks at the command line:
+[LuaRocks](https://luarocks.org/modules/manoelcampos/xml2lua) at the command line:
 
 ```bash
 luarocks install xml2lua
@@ -48,12 +48,12 @@ local parser = xml2lua.parser(handler)
 parser:parse(xml)
 
 --Manually prints the table (since the XML structure for this example is previously known)
-for k, p in pairs(handler.root.people.person) do
+for i, p in pairs(handler.root.people.person) do
   print("Name:", p.name, "City:", p.city, "Type:", p._attr.type)
 end
 ```
 
-There are some examples in the root directory, such as the [example1.lua](example1.lua). 
+There are some examples such as the [example1.lua](example1.lua). 
 
 # Command line tool
 You can use a command line tool to try parsing XML files.
