@@ -5,7 +5,7 @@
 
 require("xml2lua")
 --Uses a handler that converts the XML to a Lua table
-local handler = require("xmlhandler/tree")
+local handler = require("xmlhandler.tree")
 
 local xml = xml2lua.loadFile("people.xml")
 
