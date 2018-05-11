@@ -8,7 +8,7 @@
 --              _parent = <Parent Node>
 --              _children = { List of child nodes - ROOT/NODE only }
 --            }
---      where PI stands for XML processing instructions
+--      where PI stands for XML processing instructions.
 --
 --      The dom structure is capable of representing any valid XML document
 --

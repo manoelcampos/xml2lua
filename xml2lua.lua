@@ -1,4 +1,4 @@
---- @module This module provides a non-validating XML stream parser in Lua. 
+--- @module Module providing a non-validating XML stream parser in Lua. 
 --  
 --  Features:
 --  =========
@@ -37,7 +37,6 @@
 --  callbacks for each XML element processed (if a suitable handler
 --  function is defined). The API is conceptually similar to the 
 --  SAX API but implemented differently.
---  
 --
 --  XML data is passed to the parser instance through the 'parse'
 --  method (Note: must be passed a single string currently)

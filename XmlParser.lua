@@ -1,25 +1,21 @@
---- @module Class to parse XML
+--- @module Class providing the actual XML parser.
+--  Available options are:
+--      * stripWS   
+--        Strip non-significant whitespace (leading/trailing) 
+--        and do not generate events for empty text elements
+--  
+--      * expandEntities 
+--        Expand entities (standard entities + single char 
+--        numeric entities only currently - could be extended 
+--        at runtime if suitable DTD parser added elements
+--        to table (see obj._ENTITIES). May also be possible
+--        to expand multibyre entities for UTF-8 only
+--  
+--      * errorHandler
+--        Custom error handler function 
+--
+--  NOTE: Boolean options must be set to 'nil' not '0'
 local XmlParser = {
-    --  Available options are -
-    --  
-    --      * stripWS   
-    --      
-    --        Strip non-significant whitespace (leading/trailing) 
-    --        and do not generate events for empty text elements
-    --  
-    --      * expandEntities 
-    --  
-    --        Expand entities (standard entities + single char 
-    --        numeric entities only currently - could be extended 
-    --        at runtime if suitable DTD parser added elements
-    --        to table (see obj._ENTITIES). May also be possible
-    --        to expand multibyre entities for UTF-8 only
-    --  
-    --      * errorHandler
-    --  
-    --        Custom error handler function 
-    --
-    --  NOTE: Boolean options must be set to 'nil' not '0'
     options     = {},
     handler     = {},
     

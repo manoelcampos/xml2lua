@@ -1,6 +1,6 @@
 
 --- @module XML Tree Handler.
--- Generate a lua table from an XML content string.
+-- Generates a lua table from an XML content string.
 -- It is a simplified handler which attempts 
 -- to generate a more 'natural' table based structure which
 -- supports many common XML formats. 

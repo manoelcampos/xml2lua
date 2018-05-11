@@ -10,10 +10,6 @@ interactive Digital Television (DTV) [Ginga NCL applications](http://gingancl.or
 
 The original parser was written by Paul Chakravarti and is available on [LuaUsers](http://lua-users.org/wiki/LuaXml).
 
-The code (and documentation) is not complete yet, however it is usable and this release is intended to avoid potential duplication between efforts and get early feedback.
-
-The API is relatively stable however there may be some detailed changes.
-
 # Installation
 If you clone this repository, you are download all the module source code and can run the examples directly.
 However, if you want to use the module inside your own project, the best way is to download it using 

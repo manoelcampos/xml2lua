@@ -3,12 +3,6 @@
 ---Simple command line test parser - applies handler[s] specified
 -- to XML file (or STDIN) and dumps results<br/>
 --
--- $Id: testxml.lua,v 1.1.1.1 2001/11/28 06:11:33 paulc Exp $<br/>
---
--- $Log: testxml.lua,v $<br/>
--- Revision 1.1.1.1  2001/11/28 06:11:33  paulc<br/>
--- Initial Import
---
 
 require("xml2lua")
 local treeHandler = require("xmlhandler/tree")
