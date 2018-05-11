@@ -1,5 +1,4 @@
-----
---      Handler to generate a DOM-like node tree structure with 
+---- @module Handler to generate a DOM-like node tree structure with 
 --      a single ROOT node parent - each node is a table comprising 
 --      fields below.
 --  
@@ -9,6 +8,7 @@
 --              _parent = <Parent Node>
 --              _children = { List of child nodes - ROOT/NODE only }
 --            }
+--      where PI stands for XML processing instructions
 --
 --      The dom structure is capable of representing any valid XML document
 --
@@ -24,78 +24,106 @@
 --
 --@author Paul Chakravarti (paulc@passtheaardvark.com)
 --@author Manoel Campos da Silva Filho
+local dom = {
+    options = {commentNode=1, piNode=1, dtdNode=1, declNode=1},
+    root = { _children = {n=0}, _type = "ROOT" },
+    current = root        
+}
 
-local _G, print, string, table, pairs, type, tostring, tonumber, error, io
-      = 
-      _G, print, string, table, pairs, type, tostring, tonumber, error, io
+---Parses a start tag.
+-- @param tag a {name, attrs} table
+-- where name is the name of the tag and attrs 
+-- is a table containing the atributtes of the tag
+function dom:starttag(tag)
+    local node = { _type = 'ELEMENT', 
+                   _name = tag.name, 
+                   _attr = tag.attrs, 
+                   _parent = self.current, 
+                   _children = {n=0} 
+                 }
 
-module "xmlhandler.dom"
-
-options = {commentNode=1, piNode=1, dtdNode=1, declNode=1}
-root = { _children = {n=0}, _type = "ROOT" }
-current = root
-
-function starttag(self, t, a)
-        local node = { _type = 'ELEMENT', 
-                        _name = t, 
-                        _attr = a, 
-                        _parent = self.current, 
-                        _children = {n=0} }
-        table.insert(self.current._children,node)
-        self.current = node
+    table.insert(self.current._children, node)
+    self.current = node
 end
 
-function endtag(self, t, s)
-        if t ~= self.current._name then
-        error("XML Error - Unmatched Tag ["..s..":"..t.."]\n")
-        end
-        self.current = self.current._parent
+---Parses an end tag.
+-- @param tag a {name, attrs} table
+-- where name is the name of the tag and attrs 
+-- is a table containing the atributtes of the tag
+function dom:endtag(tag, s)
+    if tag.name ~= self.current._name then
+        error("XML Error - Unmatched Tag ["..s..":"..tag.name.."]\n")
+    end
+    self.current = self.current._parent
 end
 
-function text(self, t)
-        local node = { _type = "TEXT", 
-                        _parent = self.current, 
-                        _text = t }
-        table.insert(self.current._children,node)
+---Parses a tag content.
+-- @param text text to process
+function dom:text(text)
+    local node = { _type = "TEXT", 
+                   _parent = self.current, 
+                   _text = text
+                 }
+    table.insert(self.current._children, node)
 end
 
-function comment(self, t)
-        if self.options.commentNode then
+---
+-- @param text comment text
+function dom:comment(text)
+    if self.options.commentNode then
         local node = { _type = "COMMENT", 
-                        _parent = self.current, 
-                        _text = t }
-        table.insert(self.current._children,node)
-        end
+                       _parent = self.current, 
+                       _text = text 
+                     }
+        table.insert(self.current._children, node)
+    end
 end
 
-function pi(self, t, a)
-        if self.options.piNode then
+--- XML processing instructions (PI)
+-- @param tag a {name, attrs} table
+-- where name is the name of the tag and attrs 
+-- is a table containing the atributtes of the tag
+function dom:pi(tag)
+    if self.options.piNode then
         local node = { _type = "PI", 
-                        _name = t,
-                        _attr = a, 
-                        _parent = self.current } 
-        table.insert(self.current._children,node)
-        end
+                       _name = tag.name,
+                       _attr = tag.attrs, 
+                       _parent = self.current 
+                     } 
+        table.insert(self.current._children, node)
+    end
 end
 
-function decl(self, t, a)
-        if self.options.declNode then
+---Parse the XML declaration line (the line that indicates the XML version).
+-- @param tag a {name, attrs} table
+-- where name is the name of the tag and attrs 
+-- is a table containing the atributtes of the tag
+function dom:decl(tag)
+    if self.options.declNode then
         local node = { _type = "DECL", 
-                        _name = t,
-                        _attr = a, 
-                        _parent = self.current }
-        table.insert(self.current._children,node)
-        end
+                    _name = tag.name,
+                    _attr = tag.attrs, 
+                    _parent = self.current 
+                    }
+        table.insert(self.current._children, node)
+    end
 end
 
-function dtd(self, t, a)
-        if self.options.dtdNode then
+---Parses a DTD tag.
+-- @param tag a {name, attrs} table
+-- where name is the name of the tag and attrs 
+-- is a table containing the atributtes of the tag
+function dom:dtd(tag)
+    if self.options.dtdNode then
         local node = { _type = "DTD", 
-                        _name = t,
-                        _attr = a, 
-                        _parent = self.current }
-        table.insert(self.current._children,node)
-        end
+                       _name = tag.name,
+                       _attr = tag.attrs, 
+                       _parent = self.current 
+                     }
+        table.insert(self.current._children, node)
+    end
 end
 
-cdata = text
+---Parses CDATA tag content.
+dom.cdata = dom.text
+return dom

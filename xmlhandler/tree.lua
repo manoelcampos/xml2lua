@@ -1,4 +1,6 @@
----Handler to generate a lua table from an XML content string.
+
+--- @module XML Tree Handler.
+-- Generate a lua table from an XML content string.
 -- It is a simplified handler which attempts 
 -- to generate a more 'natural' table based structure which
 -- supports many common XML formats. 
@@ -44,16 +46,12 @@
 --
 --@author Paul Chakravarti (paulc@passtheaardvark.com)
 --@author Manoel Campos da Silva Filho
+local tree = {
+    root = {},
+    options = {noreduce = {}}
+}
 
-local _G, print, string, table, pairs, type, tostring, tonumber, error, io
-      = 
-      _G, print, string, table, pairs, type, tostring, tonumber, error, io
-
-module "xmlhandler.tree"
-
-root = {}     
-stack = {root; n=1}
-options = {noreduce = {}}
+tree._stack = {tree.root, n=1}
 
 --Gets the first key of a table
 --@param tb table to get its first key
@@ -71,9 +69,9 @@ local function getFirstKey(tb)
    return tb
 end
 
-function reduce(self, node, key, parent)
-    -- Recursively remove redundant vectors for nodes
-    -- with single child elements
+--- Recursively remove redundant vectors for nodes
+-- with single child elements
+function tree:reduce(node, key, parent)
     for k,v in pairs(node) do
         if type(v) == 'table' then
             self:reduce(v,k,node)
@@ -87,38 +85,42 @@ function reduce(self, node, key, parent)
     end
 end
     
----Parses a start tag
---@param t Table that represents a XML tag
---@param a Attributes table (_attr)
-function starttag(self, t, a)
+---Parses a start tag.
+-- @param tag a {name, attrs} table
+-- where name is the name of the tag and attrs 
+-- is a table containing the atributtes of the tag
+function tree:starttag(tag)
     local node = {}
     if self.parseAttributes == true then
-        node._attr=a
+        node._attr=tag.attrs
     end
     
-    local current = self.stack[#self.stack]
-    if current[t] then
-        table.insert(current[t],node)
+    local current = self._stack[#self._stack]
+    if current[tag.name] then
+        table.insert(current[tag.name], node)
     else
-        current[t] = {node;n=1}
+        current[tag.name] = {node; n=1}
     end
-    table.insert(self.stack,node)
+    
+    table.insert(self._stack, node)
 end
 
----Parses an end tag
---@param t Tag name
-function endtag(self, t, s)
+---Parses an end tag.
+-- @param tag a {name, attrs} table
+-- where name is the name of the tag and attrs 
+-- is a table containing the atributtes of the tag
+function tree:endtag(tag, s)
     --Tabela que representa a tag atualmente sendo processada
-    local current = self.stack[#self.stack]
+    local current = self._stack[#self._stack]
     --Tabela que representa a tag na qual a tag
     --atual está contida.
-    local prev = self.stack[#self.stack-1]
-    if not prev[t] then
-        error("XML Error - Unmatched Tag ["..s..":"..t.."]\n")
+    local prev = self._stack[#self._stack-1]
+    if not prev[tag.name] then
+        error("XML Error - Unmatched Tag ["..s..":"..tag.name.."]\n")
     end
     if prev == self.root then
         -- Once parsing complete recursively reduce tree
-        self:reduce(prev,nil,nil)
+        self:reduce(prev, nil, nil)
     end
     
     local firstKey = getFirstKey(current)
@@ -132,16 +134,20 @@ function endtag(self, t, s)
     --simplifica para as aplicações NCLua
     --para imprimir tal valor.
     if firstKey == nil then
-        current[t] = ""
-        prev[t] = ""
+        current[tag.name] = ""
+        prev[tag.name] = ""
     end
         
-    table.remove(self.stack)
+    table.remove(self._stack)
 end
 
-function text(self, t)
-    local current = self.stack[#self.stack]
-    table.insert(current,t)
+---Parses a tag content.
+-- @param t text to process
+function tree:text(t)
+    local current = self._stack[#self._stack]
+    table.insert(current, t)
 end
 
-cdata = text
+---Parses CDATA tag content.
+tree.cdata = tree.text
+return tree

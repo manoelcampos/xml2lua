@@ -3,7 +3,7 @@
 ---Sample application to read a XML file and print it on the terminal.
 --@author Manoel Campos da Silva Filho - http://manoelcampos.com
 
-require("xml2lua")
+local xml2lua = require("xml2lua")
 --Uses a handler that converts the XML to a Lua table
 local handler = require("xmlhandler.tree")
 

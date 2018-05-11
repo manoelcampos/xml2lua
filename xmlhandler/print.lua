@@ -1,4 +1,4 @@
----Handler to generate a simple event trace which 
+---@module Handler to generate a simple event trace which 
 --outputs messages to the terminal during the XML
 --parsing, usually for debugging purposes.
 --
@@ -9,61 +9,100 @@
 --
 --@author Paul Chakravarti (paulc@passtheaardvark.com)
 --@author Manoel Campos da Silva Filho
+local print = {}
 
-local _G, print, string, table, pairs, type, tostring, tonumber, error, io
-      = 
-      _G, print, string, table, pairs, type, tostring, tonumber, error, io
-
-module "xmlhandler.print"
-
-function starttag(self, t, a, s, e) 
-    io.write("Start    : "..t.."\n") 
-    if a then 
-        for k,v in pairs(a) do 
-            io.write(string.format(" + %s='%s'\n",k,v))
+---Parses a start tag.
+-- @param tag a {name, attrs} table
+-- where name is the name of the tag and attrs 
+-- is a table containing the atributtes of the tag
+-- @param s position where the tag starts
+-- @param e position where the tag ends
+function print:starttag(tag, s, e) 
+    io.write("Start    : "..tag.name.."\n") 
+    if tag.attrs then 
+        for k,v in pairs(tag.attrs) do 
+            io.write(string.format(" + %s='%s'\n", k, v))
         end 
     end
 end
 
-function endtag(self, t, s, e) 
-    io.write("End      : "..t.."\n") 
+---Parses an end tag.
+-- @param tag a {name, attrs} table
+-- where name is the name of the tag and attrs 
+-- is a table containing the atributtes of the tag
+-- @param s position where the tag starts
+-- @param e position where the tag ends
+function print:endtag(tag, s, e) 
+    io.write("End      : "..tag.name.."\n") 
 end
 
-function text(self, t, s, e)
-    io.write("Text     : "..t.."\n") 
+---Parses a tag content.
+-- @param text text to process
+-- @param s position where the tag starts
+-- @param e position where the tag ends
+function print:text(text, s, e)
+    io.write("Text     : "..text.."\n") 
 end
 
-function cdata(self, t, s, e)
-    io.write("CDATA    : "..t.."\n") 
+---Parses CDATA tag content.
+-- @param text CDATA content to be processed
+-- @param s position where the tag starts
+-- @param e position where the tag ends
+function print:cdata(text, s, e)
+    io.write("CDATA    : "..text.."\n") 
 end
 
-function comment(self, t, s, e)
-    io.write("Comment  : "..t.."\n") 
+---Parses a comment tag.
+-- @param text comment text
+-- @param s position where the tag starts
+-- @param e position where the tag ends
+function print:comment(text, s, e)
+    io.write("Comment  : "..text.."\n") 
 end
 
-function dtd(self, t, a, s, e)     
-    io.write("DTD      : "..t.."\n") 
-    if a then 
-        for k,v in pairs(a) do 
-            io.write(string.format(" + %s='%s'\n",k,v))
+---Parses a DTD tag.
+-- @param tag a {name, attrs} table
+-- where name is the name of the tag and attrs 
+-- is a table containing the atributtes of the tag
+-- @param s position where the tag starts
+-- @param e position where the tag ends
+function print:dtd(tag, s, e)     
+    io.write("DTD      : "..tag.name.."\n") 
+    if tag.attrs then 
+        for k,v in pairs(tag.attrs) do 
+            io.write(string.format(" + %s='%s'\n", k, v))
         end 
     end
 end
 
-function pi(self, t, a, s, e) 
-    io.write("PI       : "..t.."\n")
-    if a then 
-        for k,v in pairs(a) do 
+--- Parse a XML processing instructions (PI) tag.
+-- @param tag a {name, attrs} table
+-- where name is the name of the tag and attrs 
+-- is a table containing the atributtes of the tag
+-- @param s position where the tag starts
+-- @param e position where the tag ends
+function print:pi(tag, s, e) 
+    io.write("PI       : "..tag.name.."\n")
+    if tag.attrs then 
+        for k,v in pairs(tag.attrs) do 
             io. write(string.format(" + %s='%s'\n",k,v))
         end 
     end
 end
 
-function decl(self, t, a, s, e) 
-    io.write("XML Decl : "..t.."\n")
-    if a then 
-        for k,v in pairs(a) do 
-            io.write(string.format(" + %s='%s'\n",k,v))
+---Parse the XML declaration line (the line that indicates the XML version).
+-- @param tag a {name, attrs} table
+-- where name is the name of the tag and attrs 
+-- is a table containing the atributtes of the tag
+-- @param s position where the tag starts
+-- @param e position where the tag ends
+function print:decl(tag, s, e) 
+    io.write("XML Decl : "..tag.name.."\n")
+    if tag.attrs then 
+        for k,v in pairs(tag.attrs) do 
+            io.write(string.format(" + %s='%s'\n", k, v))
         end 
     end
 end
+
+return print
