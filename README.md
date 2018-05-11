@@ -1,7 +1,8 @@
 
 # xml2lua-1.0-1 [![Build Status](https://travis-ci.org/manoelcampos/xml2lua.svg?branch=master)](https://travis-ci.org/manoelcampos/xml2lua) [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
-xml2lua is an XML parser written entirely in Lua which doesn't depend on any external C/C++ library. 
+xml2lua is an XML parser written entirely in Lua which doesn't depend on any external C/C++ library, 
+and works for Lua 5.1 to 5.3.
 
 This version was adapted to work with Lua 5 and can be used in Lua applications, including
 interactive Digital Television (DTV) [Ginga NCL applications](http://gingancl.org.br/en) for the [Brazilian DTV System](http://www.dtv.org.br) 
