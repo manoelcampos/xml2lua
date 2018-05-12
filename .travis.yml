@@ -7,6 +7,8 @@ before_script:
 
 script: 
   - luarocks pack xml2lua-*.rockspec
+  #Install locally from packaged sources
+  #- luarocks install xml2lua-*.rock
   #Required for "luarocks upload" command
   - luarocks install dkjson --local
   - luarocks upload xml2lua-*.rockspec --force --api-key=$LUA_ROCKS_API_KEY
