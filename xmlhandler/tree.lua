@@ -69,7 +69,7 @@ local function getFirstKey(tb)
    return tb
 end
 
---- Recursively remove redundant vectors for nodes
+--- Recursively removes redundant vectors for nodes
 -- with single child elements
 function tree:reduce(node, key, parent)
     for k,v in pairs(node) do

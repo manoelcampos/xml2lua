@@ -8,7 +8,9 @@
 --              _parent = <Parent Node>
 --              _children = { List of child nodes - ROOT/NODE only }
 --            }
---      where PI stands for XML processing instructions.
+--      where:
+--      - PI = XML Processing Instruction tag.
+--      - DECL = XML declaration tag
 --
 --      The dom structure is capable of representing any valid XML document
 --
@@ -67,7 +69,7 @@ function dom:text(text)
     table.insert(self.current._children, node)
 end
 
----
+---Parses a comment tag.
 -- @param text comment text
 function dom:comment(text)
     if self.options.commentNode then
@@ -79,7 +81,7 @@ function dom:comment(text)
     end
 end
 
---- XML processing instructions (PI)
+--- Parses a XML processing instruction (PI) tag
 -- @param tag a {name, attrs} table
 -- where name is the name of the tag and attrs 
 -- is a table containing the atributtes of the tag

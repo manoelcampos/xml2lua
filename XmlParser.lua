@@ -75,13 +75,13 @@ local XmlParser = {
 --@param _options Options for this XmlParser instance.
 --@see XmlParser.options
 function XmlParser.new(_handler, _options)
-  local obj = {
-      handler = _handler,
-      options = _options
-  }
+    local obj = {
+        handler = _handler,
+        options = _options
+    }
 
-	setmetatable(obj, XmlParser)
-  return obj;
+    setmetatable(obj, XmlParser)
+    return obj;
 end
 
 
@@ -119,9 +119,9 @@ end
 -- is a table containing the atributtes of the tag
 local function parseTag(self, s)
     local tag = {
-        name = string.gsub(s, self._TAG, '%1'),
-        attrs = {}
-      }            
+            name = string.gsub(s, self._TAG, '%1'),
+            attrs = {}
+          }            
 
     local parseFunction = function (k, v) 
             tag.attrs[string.lower(k)] = parseEntities(self, v)
