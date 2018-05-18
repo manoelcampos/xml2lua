@@ -38,8 +38,11 @@ local XmlParser = {
     _DTD4       = '<!DOCTYPE%s+(.-)%s+(SYSTEM)%s+["\'](.-)["\']%s*>',
     _DTD5       = '<!DOCTYPE%s+(.-)%s+(PUBLIC)%s+["\'](.-)["\']%s+["\'](.-)["\']%s*>',
 
-    _ATTRERR1   = '=%s*"[^"]*$',
-    _ATTRERR2   = '=%s*\'[^\']*$',
+    --Matches an attribute with non-closing double quotes (The equal sign is matched non-greedly by using =+?)
+    _ATTRERR1   = '=+?%s*"[^"]*$',
+    --Matches an attribute with non-closing single quotes (The equal sign is matched non-greedly by using =+?)
+    _ATTRERR2   = '=+?%s*\'[^\']*$',
+    --Matches a closing tag such as </person> or the end of a openning tag such as <person>
     _TAGEXT     = '(%/?)>',
 
     _errstr = { 
@@ -112,7 +115,7 @@ local function parseEntities(self, s)
     return s
 end
 
---- Parses a string representing a tag
+--- Parses a string representing a tag.
 --@param s String containing tag text
 --@return a {name, attrs} table
 -- where name is the name of the tag and attrs 
@@ -124,7 +127,7 @@ local function parseTag(self, s)
           }            
 
     local parseFunction = function (k, v) 
-            tag.attrs[string.lower(k)] = parseEntities(self, v)
+            tag.attrs[k] = parseEntities(self, v)
             tag.attrs._ = 1 
           end
                           
@@ -261,14 +264,20 @@ end
 -- Need check for embedded '>' in attribute value and extend
 -- match recursively if necessary eg. <tag attr="123>456"> 
 local function parseNormalTag(self, xml, f)
+    --Check for errors
     while 1 do
-        f.errStart, f.errEnd = string.find(f.tagstr,self._ATTRERR1)
+        --If there isn't an attribute without closing quotes (single or double quotes)
+        --then breaks to follow the normal processing of the tag.
+        --Otherwise, try to find where the quotes close.
+        f.errStart, f.errEnd = string.find(f.tagstr, self._ATTRERR1)        
+
         if f.errEnd == nil then
             f.errStart, f.errEnd = string.find(f.tagstr, self._ATTRERR2)
             if f.errEnd == nil then
                 break
             end
         end
+        
         f.extStart, f.extEnd, f.endt2 = string.find(xml, self._TAGEXT, f.endMatch+1)
         f.tagstr = f.tagstr .. string.sub(xml, f.endMatch, f.extEnd-1)
         if not f.match then 

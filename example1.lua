@@ -20,6 +20,3 @@ end
 
 --Recursivelly prints the table in an easy-to-ready format
 --xml2lua.printable(handler.root)
-
---Recursivelly prints the table in a more structured way
---print(xml2lua.showTable(handler.root))

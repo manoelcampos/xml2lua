@@ -141,7 +141,7 @@ function xml2lua.toString(t)
 
     for k,v in pairs(t) do
         if type(v) == 'table' then 
-            v = showTable(v)
+            v = xml2lua.toString(v)
         end
         res = res .. sep .. string.format("%s=%s", k, v)    
         sep = ','
