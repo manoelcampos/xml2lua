@@ -20,10 +20,12 @@ luarocks install xml2lua
 ```
 
 # How to use
-A simplified example which parses an XML directly from a string is presented below:
+A simplified example which parses an XML directly from a string is presented below.
+There are some caveats to deal with an XML having just one person.
+Check the [example1.lua](example1.lua) for details. 
 
 ```lua
-require("xml2lua")
+local xml2lua = require("xml2lua")
 --Uses a handler that converts the XML to a Lua table
 local handler = require("xmlhandler.tree")
 
@@ -46,11 +48,9 @@ parser:parse(xml)
 
 --Manually prints the table (since the XML structure for this example is previously known)
 for i, p in pairs(handler.root.people.person) do
-  print("Name:", p.name, "City:", p.city, "Type:", p._attr.type)
+  print(i, "Name:", p.name, "City:", p.city, "Type:", p._attr.type)
 end
 ```
-
-There are some examples such as the [example1.lua](example1.lua). 
 
 # Command line tool
 You can use a command line tool to try parsing XML files.
