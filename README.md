@@ -11,7 +11,7 @@ interactive Digital Television (DTV) [Ginga NCL applications](http://gingancl.or
 The original parser was written by Paul Chakravarti and is available on [LuaUsers](http://lua-users.org/wiki/LuaXml).
 
 # Installation
-If you clone this repository, you are download all the module source code and can run the examples directly.
+If you clone this repository, you are downloading all the module's sources and can run the examples directly.
 However, if you want to use the module inside your own project, the best way is to download it using 
 [LuaRocks](https://luarocks.org/modules/manoelcampos/xml2lua) at the command line:
 
@@ -21,7 +21,7 @@ luarocks install xml2lua
 
 # How to use
 A simplified example which parses an XML directly from a string is presented below.
-There are some caveats to deal with an XML having just one person.
+There are some caveats to deal with an XML having just one tag.
 Check the [example1.lua](example1.lua) for details. 
 
 ```lua

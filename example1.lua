@@ -24,7 +24,7 @@ If there is more than one person, then person is an array instead just a simple 
 This way, we need to iterate over the person array instead of the people table.
 ]]
 if #people.person > 1 then
-   people = handler.root.people.person
+   people = people.person
 end
 
 --Manually prints the table (since the XML structure for this example is previously known)
