@@ -1,10 +1,10 @@
 
 --- @module XML Tree Handler.
 -- Generates a lua table from an XML content string.
--- It is a simplified handler which attempts 
+-- It is a simplified handler which attempts
 -- to generate a more 'natural' table based structure which
--- supports many common XML formats. 
--- 
+-- supports many common XML formats.
+--
 -- The XML tree structure is mapped directly into a recursive
 -- table structure with node names as keys and child elements
 -- as either a table of values or directly as a string value
@@ -14,21 +14,21 @@
 -- may be preferable to always insert elements as a vector
 -- which can be specified on a per element basis in the
 -- options).  Attributes are inserted as a child element with
--- a key of '_attr'. 
--- 
+-- a key of '_attr'.
+--
 -- Only Tag/Text & CDATA elements are processed - all others
 -- are ignored.
--- 
+--
 -- This format has some limitations - primarily
---  
--- * Mixed-Content behaves unpredictably - the relationship 
---   between text elements and embedded tags is lost and 
+-- 
+-- * Mixed-Content behaves unpredictably - the relationship
+--   between text elements and embedded tags is lost and
 --   multiple levels of mixed content does not work
 -- * If a leaf element has both a text element and attributes
 --   then the text must be accessed through a vector (to
 --   provide a container for the attribute)
 --
--- In general however this format is relatively useful. 
+-- In general however this format is relatively useful.
 --
 -- It is much easier to understand by running some test
 -- data through 'textxml.lua -simpletree' than to read this)
@@ -36,7 +36,7 @@
 -- Options
 -- =======
 --    options.noReduce = { <tag> = bool,.. }
---        - Nodes not to reduce children vector even if only 
+--        - Nodes not to reduce children vector even if only
 --          one child
 --
 --  License:
@@ -46,16 +46,12 @@
 --
 --@author Paul Chakravarti (paulc@passtheaardvark.com)
 --@author Manoel Campos da Silva Filho
-local tree = {
-    root = {},
-    options = {noreduce = {}}
-}
-
-tree._stack = {tree.root, n=1}
+local tree = {}
+tree.__index = tree
 
 --Gets the first key of a table
 --@param tb table to get its first key
---@return the table's first key, nil if the table is empty 
+--@return the table's first key, nil if the table is empty
 --or the given parameter if it isn't a table
 local function getFirstKey(tb)
    if type(tb) == "table" then
@@ -67,6 +63,17 @@ local function getFirstKey(tb)
    end
 
    return tb
+end
+
+function tree:new()
+    local obj = { }
+    obj.root = { }
+    obj.options = { noreduce = {} }
+    obj._stack = { obj.root, n = 1 }
+
+    setmetatable(obj, self)
+
+    return obj
 end
 
 --- Recursively removes redundant vectors for nodes
@@ -84,30 +91,30 @@ function tree:reduce(node, key, parent)
         node.n = nil
     end
 end
-    
+
 ---Parses a start tag.
 -- @param tag a {name, attrs} table
--- where name is the name of the tag and attrs 
+-- where name is the name of the tag and attrs
 -- is a table containing the atributtes of the tag
 function tree:starttag(tag)
     local node = {}
     if self.parseAttributes == true then
         node._attr=tag.attrs
     end
-    
+
     local current = self._stack[#self._stack]
     if current[tag.name] then
         table.insert(current[tag.name], node)
     else
         current[tag.name] = {node; n=1}
     end
-    
+
     table.insert(self._stack, node)
 end
 
 ---Parses an end tag.
 -- @param tag a {name, attrs} table
--- where name is the name of the tag and attrs 
+-- where name is the name of the tag and attrs
 -- is a table containing the atributtes of the tag
 function tree:endtag(tag, s)
     --Tabela que representa a tag atualmente sendo processada
@@ -122,7 +129,7 @@ function tree:endtag(tag, s)
         -- Once parsing complete recursively reduce tree
         self:reduce(prev, nil, nil)
     end
-    
+
     local firstKey = getFirstKey(current)
     --Se a primeira chave da tabela que representa
     --a tag  atual não possui nenhum elemento,
@@ -137,7 +144,7 @@ function tree:endtag(tag, s)
         current[tag.name] = ""
         prev[tag.name] = ""
     end
-        
+
     table.remove(self._stack)
 end
 
