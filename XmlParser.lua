@@ -194,7 +194,7 @@ local function parseXmlDeclaration(self, xml, f)
         err(self, self._errstr.declStartErr, f.pos)
     end
 
-    tag = parseTag(self, f.text) 
+    local tag = parseTag(self, f.text) 
     -- TODO: Check if attributes are valid
     -- Check for version (mandatory)
     if tag.attrs and tag.attrs.version == nil then
@@ -326,7 +326,7 @@ local function parseNormalTag(self, xml, f)
     end 
 
     -- Extract tag name and attrs
-    tag = parseTag(self, f.tagstr) 
+    local tag = parseTag(self, f.tagstr) 
 
     if (f.endt1=="/") then
         if fexists(self.handler, 'endtag') then
@@ -364,9 +364,9 @@ end
 local function parseTagType(self, xml, f)
     -- Test for tag type
     if string.find(string.sub(f.tagstr, 1, 5), "?xml%s") then
-        tag = parseXmlDeclaration(self, xml, f)
+        parseXmlDeclaration(self, xml, f)
     elseif string.sub(f.tagstr, 1, 1) == "?" then
-        tag = parseXmlProcessingInstructions(self, xml, f)
+        parseXmlProcessingInstruction(self, xml, f)
     elseif string.sub(f.tagstr, 1, 3) == "!--" then
         parseComment(self, xml, f)
     elseif string.sub(f.tagstr, 1, 8) == "!DOCTYPE" then
@@ -422,13 +422,14 @@ function XmlParser:parse(xml, parseAttributes)
     --and other auxiliar variables
     local f = {
         --string.find return
-        match = 0, 
+        match = 0,
         endMatch = 0,
-        text, end1, tagstr, end2,
+        -- text, end1, tagstr, end2,
 
         --string.find parameters and auxiliar variables
-        pos = 1, startText, endText, 
-        errStart, errEnd, extStart, extEnd,
+        pos = 1,
+        -- startText, endText,
+        -- errStart, errEnd, extStart, extEnd,
     }
 
     while f.match do
