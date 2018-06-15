@@ -92,6 +92,8 @@ local XmlParser = {
     },
 }
 
+local tag
+
 --- Instantiates a XmlParser object.
 --@param _handler Handler module to be used to convert the XML string
 --               to another formats. See the available handlers at the handler directory.
@@ -422,13 +424,14 @@ function XmlParser:parse(xml, parseAttributes)
     --and other auxiliar variables
     local f = {
         --string.find return
-        match = 0, 
+        match = 0,
         endMatch = 0,
-        text, end1, tagstr, end2,
+        -- text, end1, tagstr, end2,
 
         --string.find parameters and auxiliar variables
-        pos = 1, startText, endText, 
-        errStart, errEnd, extStart, extEnd,
+        pos = 1,
+        -- startText, endText,
+        -- errStart, errEnd, extStart, extEnd,
     }
 
     while f.match do
