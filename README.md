@@ -31,11 +31,11 @@ local handler = require("xmlhandler.tree")
 
 local xml = [[
 <people>
-  <person type="P">
+  <person type="natural">
     <name>Manoel</name>
     <city>Palmas-TO</city>
   </person>
-  <person type="J">
+  <person type="legal">
     <name>University of Brasília</name>
     <city>Brasília-DF</city>
   </person>  

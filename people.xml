@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <people>
-  <person type="P">
+  <person type="natural">
     <![CDATA[
     Just a CDATA tag that may contain anything, including XML code,
     such as <tag>message</tag>.
@@ -12,11 +12,11 @@
     <name>Manoel</name>
     <city>Palmas-TO</city>
   </person>
-  <person type="P">
+  <person type="natural">
     <name>Breno</name>
     <city>Palmas-TO</city>
   </person>
-  <person type="J">
+  <person type="legal">
     <name>University of Brasília</name>
     <city>Brasília-DF</city>
   </person>  
