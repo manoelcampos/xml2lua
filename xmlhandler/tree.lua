@@ -1,3 +1,12 @@
+local function init()
+    local obj = {
+        root = {},
+        options = {noreduce = {}}
+    }
+    
+    obj._stack = {obj.root, n=1}  
+    return obj  
+end
 
 --- @module XML Tree Handler.
 -- Generates a lua table from an XML content string.
@@ -35,7 +44,7 @@
 --
 -- Options
 -- =======
---    options.noReduce = { <tag> = bool,.. }
+--    options.noreduce = { <tag> = bool,.. }
 --        - Nodes not to reduce children vector even if only
 --          one child
 --
@@ -46,8 +55,21 @@
 --
 --@author Paul Chakravarti (paulc@passtheaardvark.com)
 --@author Manoel Campos da Silva Filho
-local tree = {}
-tree.__index = tree
+local tree = init()
+
+---Instantiates a new handler object.
+--Each instance can handle a single XML.
+--By using such a constructor, you can parse
+--multiple XML files in the same application.
+--@return the handler instance
+function tree:new()
+    local obj = init()
+
+    obj.__index = self
+    setmetatable(obj, self)
+
+    return obj
+end
 
 --Gets the first key of a table
 --@param tb table to get its first key
@@ -63,17 +85,6 @@ local function getFirstKey(tb)
    end
 
    return tb
-end
-
-function tree:new()
-    local obj = { }
-    obj.root = { }
-    obj.options = { noreduce = {} }
-    obj._stack = { obj.root, n = 1 }
-
-    setmetatable(obj, self)
-
-    return obj
 end
 
 --- Recursively removes redundant vectors for nodes
@@ -157,4 +168,5 @@ end
 
 ---Parses CDATA tag content.
 tree.cdata = tree.text
+tree.__index = tree
 return tree

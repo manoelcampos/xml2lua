@@ -105,7 +105,7 @@ end
 -- local handler = require("xmlhandler/tree").
 --@return a XmlParser object used to parse the XML
 --@see XmlParser
-function xml2lua.parser(handler)     
+function xml2lua.parser(handler)    
     if handler == xml2lua then
         error("You must call xml2lua.parse(handler) instead of xml2lua:parse(handler)")
     end

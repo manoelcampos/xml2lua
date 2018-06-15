@@ -16,12 +16,7 @@
 --
 --  NOTE: Boolean options must be set to 'nil' not '0'
 local XmlParser = {
-    options     = {},
-    handler     = {},
-    
     -- Private attribures/functions
-    _stack      = {},
-
     _XML        = '^([^<]*)<(%/?)([^>]-)(%/?)>',
     _ATTR1      = '([%w-:_]+)%s*=%s*"(.-)"',
     _ATTR2      = '([%w-:_]+)%s*=%s*\'(.-)\'',
@@ -80,13 +75,30 @@ local XmlParser = {
 function XmlParser.new(_handler, _options)
     local obj = {
         handler = _handler,
-        options = _options
+        options = _options,
+        _stack  = {}
     }
 
     setmetatable(obj, XmlParser)
+    obj.__index = XmlParser
     return obj;
 end
 
+---Checks if a function/field exists in a table or in its metatable
+--@param table the table to check if it has a given function
+--@param elementName the name of the function/field to check if exists
+--@return true if the function/field exists, false otherwise
+local function fexists(table, elementName)
+    if table == nil then
+        return false
+    end
+
+    if table[elementName] ~= nil then
+        return true
+    else
+        return fexists(getmetatable(table), elementName)
+    end
+end
 
 local function err(self, err, pos)
     if self.options.errorHandler then
@@ -162,7 +174,7 @@ local function parseXmlDeclaration(self, xml, f)
         err(self, self._errstr.declAttrErr, f.pos)
     end
 
-    if self.handler.decl then 
+    if fexists(self.handler, 'decl') then 
         self.handler:decl(tag, f.match, f.endMatch) 
     end    
 
@@ -177,7 +189,7 @@ local function parseXmlProcessingInstruction(self, xml, f)
     if not f.match then 
         err(self, self._errstr.piErr, f.pos)
     end 
-    if self.handler.pi then 
+    if fexists(self.handler, 'pi') then 
         -- Parse PI attributes & text
         tag = parseTag(self, f.text) 
         local pi = string.sub(f.text, string.len(tag.name)+1)
@@ -200,7 +212,7 @@ local function parseComment(self, xml, f)
         err(self, self._errstr.commentErr, f.pos)
     end 
 
-    if self.handler.comment then 
+    if fexists(self.handler, 'comment') then 
         f.text = parseEntities(self, stripWS(self, f.text))
         self.handler:comment(f.text, next, f.match, f.endMatch)
     end
@@ -244,7 +256,7 @@ local function parseDtd(self, xml, f)
         err(self, self._errstr.dtdErr, f.pos)
     end 
 
-    if self.handler.dtd then
+    if fexists(self.handler, 'dtd') then
         self.handler:dtd(attrs._root, attrs, f.match, f.endMatch)
     end
 end
@@ -255,7 +267,7 @@ local function parseCdata(self, xml, f)
         err(self, self._errstr.cdataErr, f.pos)
     end 
 
-    if self.handler.cdata then
+    if fexists(self.handler, 'cdata') then
         self.handler:cdata(f.text, nil, f.match, f.endMatch)
     end    
 end
@@ -290,8 +302,7 @@ local function parseNormalTag(self, xml, f)
     tag = parseTag(self, f.tagstr) 
 
     if (f.endt1=="/") then
-        -- End tag
-        if self.handler.endtag then
+        if fexists(self.handler, 'endtag') then
             if tag.attrs then
                 -- Shouldn't have any attributes in endtag
                 err(self, string.format("%s (/%s)", self._errstr.endTagErr, tag.name), f.pos)
@@ -302,9 +313,8 @@ local function parseNormalTag(self, xml, f)
             self.handler:endtag(tag, f.match, f.endMatch)
         end
     else
-        -- Start Tag
         table.insert(self._stack, tag.name)
-        if self.handler.starttag then
+        if fexists(self.handler, 'starttag') then
             self.handler:starttag(tag, f.match, f.endMatch)
         end
         --TODO: Tags com fechamento automático estão sendo
@@ -315,7 +325,7 @@ local function parseNormalTag(self, xml, f)
         -- Self-Closing Tag
         if (f.endt2=="/") then
             table.remove(self._stack)
-            if self.handler.endtag then
+            if fexists(self.handler, 'endtag') then
                 self.handler:endtag(tag, f.match, f.endMatch)
             end
         end
@@ -374,10 +384,11 @@ function XmlParser:parse(xml, parseAttributes)
     if type(self) ~= "table" or getmetatable(self) ~= XmlParser then
         error("You must call xmlparser:parse(parameters) instead of xmlparser.parse(parameters)")
     end
-    
+
     if parseAttributes == nil then
-        parseAttributes = true
+       parseAttributes = true
     end
+
     self.handler.parseAttributes = parseAttributes
 
     --Stores string.find results and parameters
@@ -403,7 +414,7 @@ function XmlParser:parse(xml, parseAttributes)
         f.endText = f.match + string.len(f.text) - 1
         f.match = f.match + string.len(f.text)
         f.text = parseEntities(self, stripWS(self, f.text))
-        if f.text ~= "" and self.handler.text then
+        if f.text ~= "" and fexists(self.handler, 'text') then
             self.handler:text(f.text, nil, f.match, f.endText)
         end
 
