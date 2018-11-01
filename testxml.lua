@@ -4,7 +4,7 @@
 -- to XML file (or STDIN) and dumps results<br/>
 --
 
-require("xml2lua")
+local xml2lua = require("xml2lua")
 local treeHandler = require("xmlhandler/tree")
 local domHandler = require("xmlhandler/dom")
 local printHandler = require("xmlhandler/print")
@@ -47,6 +47,11 @@ function setOptions(x)
     if _noentity then
         x.options.expandEntities = nil
     end
+end
+
+if #arg == 0 then
+    print(_usage)
+    return
 end
 
 while arg[index] do
@@ -92,7 +97,8 @@ if _file then
 
     xml = xml2lua.loadFile(_file)
 else
-    xml = read("*a")
+    print(_usage)
+    return
 end
 
 if _debug then
@@ -124,5 +130,5 @@ if _dom then
     setOptions(x)
     x:parse(xml)
     xml2lua.printable(h.root)
-    write( "-----------\n")
+    io.write( "-----------\n")
 end

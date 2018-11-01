@@ -128,29 +128,26 @@ end
 -- where name is the name of the tag and attrs
 -- is a table containing the atributtes of the tag
 function tree:endtag(tag, s)
-    --Tabela que representa a tag atualmente sendo processada
+    --Table representing the tag being processed
     local current = self._stack[#self._stack]
-    --Tabela que representa a tag na qual a tag
-    --atual está contida.
+    --Table representing the containing tag of the current tag
     local prev = self._stack[#self._stack-1]
     if not prev[tag.name] then
         error("XML Error - Unmatched Tag ["..s..":"..tag.name.."]\n")
     end
     if prev == self.root then
-        -- Once parsing complete recursively reduce tree
+        -- Once parsing complete, recursively reduce tree
         self:reduce(prev, nil, nil)
     end
 
     local firstKey = getFirstKey(current)
-    --Se a primeira chave da tabela que representa
-    --a tag  atual não possui nenhum elemento,
-    --é porque não há nenhum valor associado à tag
-    -- (como nos casos de tags automaticamente fechadas como <senha />).
-    --Assim, atribui uma string vazia a mesma para
-    --que seja retornado vazio no lugar da tag e não
-    --uma tabela. Retornando uma string vazia
-    --simplifica para as aplicações NCLua
-    --para imprimir tal valor.
+    --[[
+    If the first key in the table representing the current tag
+    doesn't have any element, it's because there is no value for 
+    that tag (such as for a auto-closing tag like <password />).
+    This way, assigns an empty string to that key
+    instead of returning an empty table.
+    --]]
     if firstKey == nil then
         current[tag.name] = ""
         prev[tag.name] = ""

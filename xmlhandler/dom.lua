@@ -1,6 +1,6 @@
 ---- @module Handler to generate a DOM-like node tree structure with 
 --      a single ROOT node parent - each node is a table comprising 
---      fields below.
+--      the fields below.
 --  
 --      node = { _name = <Element Name>,
 --              _type = ROOT|ELEMENT|TEXT|COMMENT|PI|DECL|DTD,
@@ -28,8 +28,8 @@
 --@author Manoel Campos da Silva Filho
 local dom = {
     options = {commentNode=1, piNode=1, dtdNode=1, declNode=1},
-    root = { _children = {n=0}, _type = "ROOT" },
-    current = root        
+    current = { _children = {n=0}, _type = "ROOT" },
+    _stack = {}
 }
 
 ---Parses a start tag.
@@ -40,9 +40,14 @@ function dom:starttag(tag)
     local node = { _type = 'ELEMENT', 
                    _name = tag.name, 
                    _attr = tag.attrs, 
-                   _parent = self.current, 
                    _children = {n=0} 
                  }
+            
+    if self.root == nil then
+        self.root = node
+    end
+
+    table.insert(self._stack, node)
 
     table.insert(self.current._children, node)
     self.current = node
@@ -53,17 +58,20 @@ end
 -- where name is the name of the tag and attrs 
 -- is a table containing the atributtes of the tag
 function dom:endtag(tag, s)
-    if tag.name ~= self.current._name then
+    --Table representing the containing tag of the current tag
+    local prev = self._stack[#self._stack]
+
+    if tag.name ~= prev._name then
         error("XML Error - Unmatched Tag ["..s..":"..tag.name.."]\n")
     end
-    self.current = self.current._parent
+
+    table.remove(self._stack)
 end
 
 ---Parses a tag content.
 -- @param text text to process
 function dom:text(text)
     local node = { _type = "TEXT", 
-                   _parent = self.current, 
                    _text = text
                  }
     table.insert(self.current._children, node)
@@ -74,7 +82,6 @@ end
 function dom:comment(text)
     if self.options.commentNode then
         local node = { _type = "COMMENT", 
-                       _parent = self.current, 
                        _text = text 
                      }
         table.insert(self.current._children, node)
@@ -90,7 +97,6 @@ function dom:pi(tag)
         local node = { _type = "PI", 
                        _name = tag.name,
                        _attr = tag.attrs, 
-                       _parent = self.current 
                      } 
         table.insert(self.current._children, node)
     end
@@ -105,7 +111,6 @@ function dom:decl(tag)
         local node = { _type = "DECL", 
                     _name = tag.name,
                     _attr = tag.attrs, 
-                    _parent = self.current 
                     }
         table.insert(self.current._children, node)
     end
@@ -120,7 +125,6 @@ function dom:dtd(tag)
         local node = { _type = "DTD", 
                        _name = tag.name,
                        _attr = tag.attrs, 
-                       _parent = self.current 
                      }
         table.insert(self.current._children, node)
     end
