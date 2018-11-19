@@ -21,8 +21,8 @@ luarocks install xml2lua
 
 # How to use
 A simplified example which parses an XML directly from a string is presented below.
-There are some caveats to deal with when an XML has just one tag.
-Check the [example1.lua](example1.lua) for details. 
+**There are some caveats to deal with when an XML has just one tag.
+Check the [example1.lua](example1.lua) for details.**
 
 ```lua
 local xml2lua = require("xml2lua")
