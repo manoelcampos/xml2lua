@@ -19,7 +19,7 @@ _ws = nil
 _noentity = nil
 
 _usage = [[
-textxml.lua [-print] [-simpletree] [-dom] [-debug] 
+testxml.lua [-print] [-simpletree] [-dom] [-debug] 
             [-ws] [-noentity] [-help] [file]
 ]]
 

@@ -40,7 +40,7 @@ end
 -- In general however this format is relatively useful.
 --
 -- It is much easier to understand by running some test
--- data through 'textxml.lua -simpletree' than to read this)
+-- data through 'testxml.lua -simpletree' than to read this)
 --
 -- Options
 -- =======
