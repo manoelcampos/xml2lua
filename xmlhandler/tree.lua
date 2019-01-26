@@ -113,7 +113,9 @@ function tree:starttag(tag)
         node._attr=tag.attrs
     end
 
+    --Table in the stack representing the tag being processed
     local current = self._stack[#self._stack]
+    
     if current[tag.name] then
         table.insert(current[tag.name], node)
     else
@@ -128,9 +130,9 @@ end
 -- where name is the name of the tag and attrs
 -- is a table containing the atributtes of the tag
 function tree:endtag(tag, s)
-    --Table representing the tag being processed
+    --Table in the stack representing the tag being processed
     local current = self._stack[#self._stack]
-    --Table representing the containing tag of the current tag
+    --Table in the stack representing the containing tag of the current tag
     local prev = self._stack[#self._stack-1]
     if not prev[tag.name] then
         error("XML Error - Unmatched Tag ["..s..":"..tag.name.."]\n")
@@ -141,18 +143,6 @@ function tree:endtag(tag, s)
     end
 
     local firstKey = getFirstKey(current)
-    --[[
-    If the first key in the table representing the current tag
-    doesn't have any element, it's because there is no value for 
-    that tag (such as for a auto-closing tag like <password />).
-    This way, assigns an empty string to that key
-    instead of returning an empty table.
-    --]]
-    if firstKey == nil then
-        current[tag.name] = ""
-        prev[tag.name] = ""
-    end
-
     table.remove(self._stack)
 end
 
