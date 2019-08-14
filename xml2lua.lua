@@ -138,4 +138,76 @@ function xml2lua.loadFile(xmlFilePath)
     error(e)
 end
 
+---Gets an _attr element from a table that represents the attributes of an XML tag,
+--and generates a XML String representing the attibutes to be inserted
+--into the openning tag of the XML
+--
+--@param attrTable table from where the _attr field will be got
+--@return a XML String representation of the tag attributes
+local function attrToXml(attrTable)
+  local s = ""
+  local attrTable = attrTable or {}
+  
+  for k, v in pairs(attrTable) do
+      s = s .. " " .. k .. "=" .. '"' .. v .. '"'
+  end
+  return s
+end
+
+---Gets the first key of a given table
+local function getFirstKey(tb)
+   if type(tb) == "table" then
+      for k, v in pairs(tb) do
+          return k
+      end
+      return nil
+   end
+
+   return tb
+end
+
+---Converts a Lua table to a XML String representation.
+--@param tb Table to be converted to XML
+--@param tableName Name of the table variable given to this function,
+--                 to be used as the root tag.
+--@param level Only used internally, when the function is called recursively to print indentation
+--
+--@return a String representing the table content in XML
+function xml2lua.toXml(tb, tableName, level)
+  local level = level or 0
+  local firstLevel = level
+  local spaces = string.rep(' ', level*2)
+  local xmltb = level == 0 and {'<'..tableName..'>'} or {}
+
+  for k, v in pairs(tb) do
+      if type(v) == "table" then
+         --If the keys of the table are a number, it represents an array
+         if type(k) == "number" then
+            local attrs = attrToXml(v._attr)
+            v._attr = nil
+            table.insert(xmltb, 
+                spaces..'<'..tableName..attrs..'>\n'..xml2lua.toXml(v, tableName, level+1)..
+                '\n'..spaces..'</'..tableName..'>') 
+         else 
+            level = level + 1
+            if type(getFirstKey(v)) == "number" then 
+               table.insert(xmltb, spaces..xml2lua.toXml(v, k, level))
+            else
+              table.insert(
+                 xmltb, 
+                 spaces..'<'..k..'>\n'.. xml2lua.toXml(v, level+1)..
+                 '\n'..spaces..'</'..k..'>')
+            end
+         end
+      else
+         table.insert(xmltb, spaces..'<'..k..'>'..tostring(v)..'</'..k..'>')
+      end
+  end
+
+  if firstLevel == 0 then
+     table.insert(xmltb, '</'..tableName..'>\n')
+  end
+  return table.concat(xmltb, "\n")
+end
+
 return xml2lua

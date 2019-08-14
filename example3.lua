@@ -10,10 +10,10 @@ local xml2lua = require("xml2lua")
 --Uses a handler that converts the XML to a Lua table
 local handler = require("xmlhandler.tree")
 
+local xml = "<tag><tag1/><tag1/></tag>"
 --local xml = "<tag><tag1/></tag>"
---local xml = "<tag><tag1/><tag1/></tag>"
 --local xml = "<tag><tag1>A</tag1><tag1>B</tag1></tag>"
-local xml = "<tag><tag1>A</tag1></tag>"
+--local xml = "<tag><tag1>A</tag1></tag>"
 
 --Instantiates the XML parser
 local parser = xml2lua.parser(handler)
