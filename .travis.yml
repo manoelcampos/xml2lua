@@ -1,8 +1,6 @@
 #in fact the language is lua, but travis doesn't support it directly
 language: python
 before_script:
-  - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu artful universe" -y
-  - sudo apt-get -qq update
   - sudo apt-get install -y luarocks
 
 script: 
