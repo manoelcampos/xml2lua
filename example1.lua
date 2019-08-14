@@ -20,7 +20,7 @@ Iterating over the people table we'll directly get the single person that it rep
 local people = handler.root.people
 
 --[[
-If there is more than one person, then person is an array instead of regular table.
+If there is more than one person, then person is an array instead of a regular table.
 This way, we need to iterate over the person array instead of the people table.
 ]]
 if #people.person > 1 then
