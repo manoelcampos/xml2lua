@@ -56,7 +56,8 @@ local XmlParser = {
     _WS         = '^%s*$',
     _DTD1       = '<!DOCTYPE%s+(.-)%s+(SYSTEM)%s+["\'](.-)["\']%s*(%b[])%s*>',
     _DTD2       = '<!DOCTYPE%s+(.-)%s+(PUBLIC)%s+["\'](.-)["\']%s+["\'](.-)["\']%s*(%b[])%s*>',
-    _DTD3       = '<!DOCTYPE%s+(.-)%s*(%b[])%s*>',
+    --_DTD3       = '<!DOCTYPE%s+(.-)%s*(%b[])%s*>',
+    _DTD3       = '<!DOCTYPE%s.->',
     _DTD4       = '<!DOCTYPE%s+(.-)%s+(SYSTEM)%s+["\'](.-)["\']%s*>',
     _DTD5       = '<!DOCTYPE%s+(.-)%s+(PUBLIC)%s+["\'](.-)["\']%s+["\'](.-)["\']%s*>',
 
@@ -245,44 +246,27 @@ end
 
 local function _parseDtd(self, xml, pos)
     -- match,endMatch,root,type,name,uri,internal
-    local m,e,r,t,n,u,i
-    
-    m,e,r,t,u,i = string.find(xml, self._DTD1,pos)
-    if m then
-        return m, e, {_root=r,_type=t,_uri=u,_internal=i} 
-    end
+    local dtdPatterns = {self._DTD1, self._DTD2, self._DTD3, self._DTD4, self._DTD5}
 
-    m,e,r,t,n,u,i = string.find(xml, self._DTD2,pos)
-    if m then
-        return m, e, {_root=r,_type=t,_name=n,_uri=u,_internal=i} 
-    end
-
-    m,e,r,i = string.find(xml, self._DTD3,pos)
-    if m then
-        return m, e, {_root=r,_internal=i} 
-    end
-
-    m,e,r,t,u = string.find(s,self._DTD4,pos)
-    if m then
-        return m,e,{_root=r,_type=t,_uri=u} 
-    end
-
-    m,e,r,t,n,u = string.find(s,self._DTD5,pos)
-    if m then
-        return m,e,{_root=r,_type=t,_name=n,_uri=u} 
+    for i, dtd in pairs(dtdPatterns) do
+        local m,e,r,t,n,u,i = string.find(xml, dtd, pos)
+        if m then
+            return m, e, {_root=r, _type=t, _name=n, _uri=u, _internal=i} 
+        end
     end
 
     return nil
 end
 
 local function parseDtd(self, xml, f)
-    f.match, f.endMatch, attrs = self:_parseDtd(xml, f.pos)
+    f.match, f.endMatch, attrs = _parseDtd(self, xml, f.pos)
     if not f.match then 
         err(self, self._errstr.dtdErr, f.pos)
     end 
 
     if fexists(self.handler, 'dtd') then
-        self.handler:dtd(attrs._root, attrs, f.match, f.endMatch)
+        local tag = {name="DOCTYPE", value=string.sub(xml, f.match+10, f.endMatch-1)}
+        self.handler:dtd(tag, f.match, f.endMatch)
     end
 end
 
