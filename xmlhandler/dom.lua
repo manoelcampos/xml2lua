@@ -66,6 +66,7 @@ function dom:endtag(tag, s)
     end
 
     table.remove(self._stack)
+    self.current = self._stack[#self._stack]
 end
 
 ---Parses a tag content.
