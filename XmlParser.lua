@@ -121,10 +121,10 @@ local function fexists(table, elementName)
         return false
     end
 
-    if table[elementName] ~= nil then
-        return true
-    else
+    if table[elementName] == nil then
         return fexists(getmetatable(table), elementName)
+    else
+        return true
     end
 end
 
@@ -201,7 +201,7 @@ local function parseXmlDeclaration(self, xml, f)
     end
 
     if fexists(self.handler, 'decl') then 
-        self.handler:decl(tag, f.match, f.endMatch) 
+        self.handler:decl(tag, f.match, f.endMatch)
     end    
 
     return tag

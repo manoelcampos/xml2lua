@@ -1,4 +1,12 @@
----- @module Handler to generate a DOM-like node tree structure with 
+local function init()
+    return {
+        options = {commentNode=1, piNode=1, dtdNode=1, declNode=1},
+        current = { _children = {n=0}, _type = "ROOT" },
+        _stack = {}
+    }
+end
+
+--- @module Handler to generate a DOM-like node tree structure with
 --      a single ROOT node parent - each node is a table comprising 
 --      the fields below.
 --  
@@ -26,11 +34,21 @@
 --
 --@author Paul Chakravarti (paulc@passtheaardvark.com)
 --@author Manoel Campos da Silva Filho
-local dom = {
-    options = {commentNode=1, piNode=1, dtdNode=1, declNode=1},
-    current = { _children = {n=0}, _type = "ROOT" },
-    _stack = {}
-}
+local dom = init()
+
+---Instantiates a new handler object.
+--Each instance can handle a single XML.
+--By using such a constructor, you can parse
+--multiple XML files in the same application.
+--@return the handler instance
+function dom:new()
+    local obj = init()
+
+    obj.__index = self
+    setmetatable(obj, self)
+
+    return obj
+end
 
 ---Parses a start tag.
 -- @param tag a {name, attrs} table
@@ -133,4 +151,5 @@ end
 
 ---Parses CDATA tag content.
 dom.cdata = dom.text
+dom.__index = dom
 return dom

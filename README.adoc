@@ -18,7 +18,7 @@ image:conversion-ways.png[]
 *xml2lua* is an XML parser written entirely in Lua which doesn't depend on any external C/C++ library.
 It works for Lua 5.1 to 5.3 and enables:
 
-* parsing a XML string into a Lua Table;
+* parsing an XML string into a Lua Table;
 * converting a Lua Table to an XML string.
 
 This version was adapted to work with Lua 5 and can be used in Lua applications, including
@@ -40,7 +40,7 @@ luarocks install xml2lua
 
 == How to use
 
-=== Parsing a XML String into a Lua Table
+=== Parsing an XML String into a Lua Table
 
 A simplified example which parses an XML directly from a string is presented below.
 *There are some caveats to deal with when an XML has just one tag.
