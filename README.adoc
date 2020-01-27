@@ -99,8 +99,8 @@ end
 local xml2lua = require("xml2lua")
 local people = {
     person = {
-        {name="Manoel", city="Palmas-TO"},
-        {name="Breno", city="Palmas-TO"}
+        {name="Manoel", city="Palmas-TO", _attr={ type='natural' } },
+        {name="Breno", city="Palmas-TO", _attr={ type='legal' } }
     }
 }
 
