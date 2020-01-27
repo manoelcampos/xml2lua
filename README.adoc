@@ -29,13 +29,30 @@ The original parser was written by Paul Chakravarti and is available on http://l
 
 == Installation
 
-If you clone this repository, you are downloading all the module's sources and can run the examples directly.
-However, if you want to use the module inside your own project, the best way is to download it using
+=== From LuaRocks repository
+
+The best way to download the module is using
 https://luarocks.org/modules/manoelcampos/xml2lua[LuaRocks] at the command line:
 
 [source,bash]
 ----
 luarocks install xml2lua
+----
+
+=== From local sources
+
+Download the source files using the download button above or type at a terminal:
+
+[source,bash]
+----
+git clone git@github.com:manoelcampos/xml2lua.git
+----
+
+Finally, enter the directory where the source files were downloaded and type:
+
+[source,bash]
+----
+luarocks make
 ----
 
 == How to use
