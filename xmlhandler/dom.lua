@@ -86,6 +86,9 @@ function dom:endtag(tag, s)
 
     table.remove(self._stack)
     self.current = self._stack[#self._stack]
+	if (self.current == nil) then
+		self.current = { _children = {n=0}, _type = "ROOT" };
+	end
 end
 
 ---Parses a tag content.
