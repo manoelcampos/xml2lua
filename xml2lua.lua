@@ -132,7 +132,9 @@ function xml2lua.loadFile(xmlFilePath)
     local f, e = io.open(xmlFilePath, "r")
     if f then
         --Gets the entire file content and stores into a string
-        return f:read("*a")
+        local content = f:read("*a")
+        f:close()
+        return content
     end
     
     error(e)
