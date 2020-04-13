@@ -176,10 +176,10 @@ end
 --
 --@return a String representing the table content in XML
 function xml2lua.toXml(tb, tableName, level)
-  local level = level or 0
+  local level = level or 1
   local firstLevel = level
   local spaces = string.rep(' ', level*2)
-  local xmltb = level == 0 and {'<'..tableName..'>'} or {}
+  local xmltb = level == 1 and {'<'..tableName..'>'} or {}
 
   for k, v in pairs(tb) do
       if type(v) == "table" then
@@ -197,7 +197,7 @@ function xml2lua.toXml(tb, tableName, level)
             else
               table.insert(
                  xmltb, 
-                 spaces..'<'..k..'>\n'.. xml2lua.toXml(v, level+1)..
+                 spaces..'<'..k..'>\n'.. xml2lua.toXml(v, k, level+1)..
                  '\n'..spaces..'</'..k..'>')
             end
          end
@@ -206,7 +206,7 @@ function xml2lua.toXml(tb, tableName, level)
       end
   end
 
-  if firstLevel == 0 then
+  if firstLevel == 1 then
      table.insert(xmltb, '</'..tableName..'>\n')
   end
   return table.concat(xmltb, "\n")
