@@ -195,10 +195,11 @@ function xml2lua.toXml(tb, tableName, level)
             if type(getFirstKey(v)) == "number" then 
                table.insert(xmltb, spaces..xml2lua.toXml(v, k, level))
             else
-              table.insert(
-                 xmltb, 
-                 spaces..'<'..k..'>\n'.. xml2lua.toXml(v, k, level+1)..
-                 '\n'..spaces..'</'..k..'>')
+               local attrs = attrToXml(v._attr)
+               v._attr = nil
+               table.insert(xmltb, 
+                   spaces..'<'..k..attrs..'>\n'.. xml2lua.toXml(v, k, level+1)..
+                   '\n'..spaces..'</'..k..'>')
             end
          end
       else
