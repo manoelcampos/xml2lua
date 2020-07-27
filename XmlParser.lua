@@ -326,10 +326,6 @@ local function parseNormalTag(self, xml, f)
         if fexists(self.handler, 'starttag') then
             self.handler:starttag(tag, f.match, f.endMatch)
         end
-        --TODO: Tags com fechamento automático estão sendo
-        --retornadas como uma tabela, o que complica
-        --para a app NCLua tratar isso. É preciso
-        --fazer com que seja retornado um campo string vazio.
 
         -- Self-Closing Tag
         if (f.endt2=="/") then
