@@ -148,7 +148,7 @@ end
 --@return a XML String representation of the tag attributes
 local function attrToXml(attrTable)
   local s = ""
-  local attrTable = attrTable or {}
+  attrTable = attrTable or {}
   
   for k, v in pairs(attrTable) do
       s = s .. " " .. k .. "=" .. '"' .. v .. '"'
@@ -159,7 +159,7 @@ end
 ---Gets the first key of a given table
 local function getFirstKey(tb)
    if type(tb) == "table" then
-      for k, v in pairs(tb) do
+      for k, _ in pairs(tb) do
           return k
       end
       return nil
@@ -176,8 +176,7 @@ end
 --
 --@return a String representing the table content in XML
 function xml2lua.toXml(tb, tableName, level)
-  local level = level or 1
-  local firstLevel = level
+  level = level or 1
   local spaces = string.rep(' ', level*2)
   local xmltb = {}
 
