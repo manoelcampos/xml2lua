@@ -179,7 +179,7 @@ function xml2lua.toXml(tb, tableName, level)
   local level = level or 1
   local firstLevel = level
   local spaces = string.rep(' ', level*2)
-  local xmltb = level == 1 and {'<'..tableName..'>'} or {}
+  local xmltb = {}
 
   for k, v in pairs(tb) do
       if type(v) == "table" then
@@ -203,13 +203,15 @@ function xml2lua.toXml(tb, tableName, level)
             end
          end
       else
+         -- If the type of the key is number, the value is an element from an array.
+         -- In this case, uses the array name (the name of the array) as the tag name.
+         if type(k) == "number" then
+            k = tableName
+         end
          table.insert(xmltb, spaces..'<'..k..'>'..tostring(v)..'</'..k..'>')
       end
   end
 
-  if firstLevel == 1 then
-     table.insert(xmltb, '</'..tableName..'>\n')
-  end
   return table.concat(xmltb, "\n")
 end
 
