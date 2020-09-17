@@ -1,4 +1,6 @@
 *.rock
+test.lua
+teste.lua
 
 #IntelliJ IDEA Files
 .idea
