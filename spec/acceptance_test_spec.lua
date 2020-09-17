@@ -23,28 +23,6 @@ local simple_xml_with_attributes = [[<people>
 </people>
 ]]
 
-local simple_lua_string_xml = [[<people>
-  <people type="legal">
-    <salary>42.1</salary>
-    <music like="true">
-
-    </music>
-    <city>Brasília-DF</city>
-    <name>Manoela</name>
-    <age>42</age>
-  </people>
-  <people type="natural">
-    <salary>42.1</salary>
-    <music like="true">
-
-    </music>
-    <city>Palmas-TO</city>
-    <name>Manoel</name>
-    <age>42</age>
-  </people>
-</people>
-]]
-
 describe("Acceptance tests", function()
   describe("From XML to lua table", function()
     it("parses tags and attributes", function()
@@ -75,11 +53,6 @@ describe("Acceptance tests", function()
       assert.is.truthy(string.find(string_xml, "Manoela"))
       assert.is.truthy(string.find(string_xml, "Manoel"))
       assert.is.falsy(string.find(string_xml, "Manuca"))
-
-      -- I intentionally did this test to show that the output will differ from the raw input
-      -- things like single closed nodes
-      -- this kind of test is hard to keep update when the use cases grow.
-      -- assert.is.equals(simple_lua_string_xml, string_xml)
     end)
   end)
 end)
