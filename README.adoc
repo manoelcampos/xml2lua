@@ -117,6 +117,20 @@ print(xml2lua.toXml(people, "people"))
 You can use a command line tool to try parsing XML files.
 Execute `lua testxml.lua -help` on the terminal for more details.
 
+== Running tests
+
+=== Requeriments
+
+You must have https://docs.docker.com/compose/install/[installed docker and docker compose].
+
+=== How to
+
+[source,bash]
+----
+make lint # to run the lint check
+make test # to run the acceptance tests
+----
+
 == License
 
 This code is freely distributable under the terms of the link:LICENSE[MIT license].
