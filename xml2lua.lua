@@ -171,7 +171,8 @@ end
 ---Converts a Lua table to a XML String representation.
 --@param tb Table to be converted to XML
 --@param tableName Name of the table variable given to this function,
---                 to be used as the root tag.
+--                 to be used as the root tag. If a value is not provided
+--                 no root tag will be created.
 --@param level Only used internally, when the function is called recursively to print indentation
 --
 --@return a String representing the table content in XML
@@ -179,7 +180,8 @@ function xml2lua.toXml(tb, tableName, level)
   local level = level or 1
   local firstLevel = level
   local spaces = string.rep(' ', level*2)
-  local xmltb = {}
+  tableName = tableName or ""
+  local xmltb = (tableName ~= '' and level == 1) and {'<'..tableName..'>'} or {}
 
   for k, v in pairs(tb) do
       if type(v) == "table" then
@@ -210,6 +212,10 @@ function xml2lua.toXml(tb, tableName, level)
          end
          table.insert(xmltb, spaces..'<'..k..'>'..tostring(v)..'</'..k..'>')
       end
+  end
+
+  if tableName ~= '' and firstLevel == 1 then
+      table.insert(xmltb, '</'..tableName..'>\n')
   end
 
   return table.concat(xmltb, "\n")
