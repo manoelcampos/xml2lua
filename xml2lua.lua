@@ -193,7 +193,7 @@ function xml2lua.toXml(tb, tableName, level)
          else 
             level = level + 1
             if type(getFirstKey(v)) == "number" then 
-               table.insert(xmltb, spaces..xml2lua.toXml(v, k, level))
+               table.insert(xmltb, xml2lua.toXml(v, k, level))
             else
                local attrs = attrToXml(v._attr)
                v._attr = nil
