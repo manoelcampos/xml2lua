@@ -5,9 +5,9 @@ RUN apt-get update -qq \
     && luarocks install luasocket \
     && luarocks install luacheck \
     && luarocks install luacov \
-    && luarocks install xml2lua \
     && luarocks install luacov-coveralls \
-    && luarocks install busted 
+    && luarocks install busted \
+    && luarocks make
 
 CMD ["busted"]
 
