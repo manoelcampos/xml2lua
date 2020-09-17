@@ -1,13 +1,12 @@
 FROM nickblah/lua:5.1-luarocks-ubuntu
 
-RUN apt-get update -qq \
-    && apt-get install build-essential -qq \
-    && luarocks install luasocket \
-    && luarocks install luacheck \
-    && luarocks install luacov \
-    && luarocks install luacov-coveralls \
-    && luarocks install busted \
-    && luarocks make
+RUN apt-get update -qq > /dev/null \
+    && apt-get install build-essential git zip -qq > /dev/null \
+    && luarocks install luasocket > /dev/null \
+    && luarocks install luacheck > /dev/null  \
+    && luarocks install luacov > /dev/null  \
+    && luarocks install luacov-coveralls > /dev/null  \
+    && luarocks install busted > /dev/null
 
 CMD ["busted"]
 

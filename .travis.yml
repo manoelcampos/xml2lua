@@ -1,12 +1,16 @@
-#in fact the language is lua, but travis doesn't support it directly
-language: python
-before_script:
-  - sudo apt-get install -y luarocks
+language: lua
+services:
+  - docker
+
+env:
+  COMPOSE_VERSION: 18.06
+
+install: 
+  - docker-compose build test
+  - docker-compose build upload
 
 script: 
-  - luarocks pack xml2lua-*.rockspec
-  #Install locally from packaged sources
-  #- luarocks install xml2lua-*.rock
-  #Required for "luarocks upload" command
-  - luarocks install dkjson --local
-  - luarocks upload xml2lua-*.rockspec --force --api-key=$LUA_ROCKS_API_KEY
+  - docker-compose run --rm test
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then docker-compose run --rm upload; fi'
+
+after_script: docker-compose down

@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   test:
-    command: busted --shuffle
+    command: bash -c "luarocks make && busted --shuffle"
     build:
       context: .
       dockerfile: test.Dockerfile
@@ -19,3 +19,13 @@ services:
       - ".:/lua/"
     working_dir: "/lua"
 
+  upload:
+    environment:
+      - LUA_ROCKS_API_KEY
+    command: bash -c "luarocks install dkjson --local && luarocks upload xml2lua-*.rockspec --force --api-key=$LUA_ROCKS_API_KEY"
+    build:
+      context: .
+      dockerfile: test.Dockerfile
+    volumes:
+      - ".:/lua/"
+    working_dir: "/lua"
