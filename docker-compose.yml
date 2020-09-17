@@ -11,7 +11,7 @@ services:
     working_dir: "/lua"
 
   lint:
-    command: bash -c "luacheck -q ."
+    command: luacheck -q .
     build:
       context: .
       dockerfile: test.Dockerfile
@@ -22,10 +22,13 @@ services:
   upload:
     environment:
       - LUA_ROCKS_API_KEY
-    command: bash -c "luarocks install dkjson --local && luarocks upload xml2lua-*.rockspec --force --api-key=$LUA_ROCKS_API_KEY"
+    #the command doesn't work without the bash -c, even being a single command
+    command: bash -c "luarocks upload xml2lua-*.rockspec --force --api-key=$LUA_ROCKS_API_KEY"
     build:
       context: .
       dockerfile: test.Dockerfile
     volumes:
       - ".:/lua/"
     working_dir: "/lua"
+    depends_on:
+      - test
