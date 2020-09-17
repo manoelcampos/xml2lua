@@ -128,9 +128,9 @@ local function fexists(table, elementName)
     end
 end
 
-local function err(self, err, pos)
+local function err(self, errMsg, pos)
     if self.options.errorHandler then
-        self.options.errorHandler(err,pos)
+        self.options.errorHandler(errMsg,pos)
     end
 end
 
@@ -248,7 +248,7 @@ local function _parseDtd(self, xml, pos)
     -- match,endMatch,root,type,name,uri,internal
     local dtdPatterns = {self._DTD1, self._DTD2, self._DTD3, self._DTD4, self._DTD5}
 
-    for i, dtd in pairs(dtdPatterns) do
+    for _, dtd in pairs(dtdPatterns) do
         local m,e,r,t,n,u,i = string.find(xml, dtd, pos)
         if m then
             return m, e, {_root=r, _type=t, _name=n, _uri=u, _internal=i} 
@@ -259,7 +259,7 @@ local function _parseDtd(self, xml, pos)
 end
 
 local function parseDtd(self, xml, f)
-    f.match, f.endMatch, attrs = _parseDtd(self, xml, f.pos)
+    f.match, f.endMatch, _ = _parseDtd(self, xml, f.pos)
     if not f.match then 
         err(self, self._errstr.dtdErr, f.pos)
     end 

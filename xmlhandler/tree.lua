@@ -71,22 +71,6 @@ function tree:new()
     return obj
 end
 
---Gets the first key of a table
---@param tb table to get its first key
---@return the table's first key, nil if the table is empty
---or the given parameter if it isn't a table
-local function getFirstKey(tb)
-   if type(tb) == "table" then
-      for k, v in pairs(tb) do
-          return k
-      end
-
-      return nil
-   end
-
-   return tb
-end
-
 --- Recursively removes redundant vectors for nodes
 -- with single child elements
 function tree:reduce(node, key, parent)
@@ -131,7 +115,6 @@ end
 -- is a table containing the atributtes of the tag
 function tree:endtag(tag, s)
     --Table in the stack representing the tag being processed
-    local current = self._stack[#self._stack]
     --Table in the stack representing the containing tag of the current tag
     local prev = self._stack[#self._stack-1]
     if not prev[tag.name] then
@@ -142,7 +125,6 @@ function tree:endtag(tag, s)
         self:reduce(prev, nil, nil)
     end
 
-    local firstKey = getFirstKey(current)
     table.remove(self._stack)
 end
 
