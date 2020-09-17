@@ -5,7 +5,7 @@ services:
     command: busted --shuffle
     build:
       context: .
-      dockerfile: Dockerfile.test
+      dockerfile: test.Dockerfile
     volumes:
       - ".:/lua/"
     working_dir: "/lua"
@@ -14,7 +14,7 @@ services:
     command: bash -c "luacheck -q ."
     build:
       context: .
-      dockerfile: Dockerfile.test
+      dockerfile: test.Dockerfile
     volumes:
       - ".:/lua/"
     working_dir: "/lua"
