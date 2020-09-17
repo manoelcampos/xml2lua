@@ -11,6 +11,13 @@ install:
 
 script: 
   - docker-compose run --rm test
-  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then docker-compose run --rm upload; fi'
+
+deploy:
+  provider: script
+  script: docker-compose run --rm upload
+  on:
+    tags: true
+    branch: master
 
 after_script: docker-compose down
+after_deploy: docker-compose down
