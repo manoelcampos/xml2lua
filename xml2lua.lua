@@ -179,13 +179,15 @@ end
 function xml2lua.toXml(tb, tableName, level)
   level = level or 1
   local spaces = string.rep(' ', level*2)
-  tableName = tableName or ""
+  tableName = tableName or ''
   local xmltb = (tableName ~= '' and level == 1) and {'<'..tableName..'>'} or {}
 
   for k, v in pairs(tb) do
-      if type(v) == "table" then
-         --If the keys of the table are a number, it represents an array
-         if type(k) == "number" then
+      if type(v) == 'table' then
+         -- If the key is a number, the given table is an array and the value is an element inside that array.
+         -- In this case, the name of the array is used as tag name for each element.
+         -- So, we are parsing an array of objects, not an array of primitives.
+         if type(k) == 'number' then
             local attrs = attrToXml(v._attr)
             v._attr = nil
             table.insert(xmltb, 
@@ -193,9 +195,13 @@ function xml2lua.toXml(tb, tableName, level)
                 '\n'..spaces..'</'..tableName..'>') 
          else 
             level = level + 1
-            if type(getFirstKey(v)) == "number" then 
+            -- If the type of the first key of the value inside the table
+            -- is a number, it means we have a HashMap-like structcture,
+            -- in this case with keys as strings and values as arrays.
+            if type(getFirstKey(v)) == 'number' then 
                table.insert(xmltb, xml2lua.toXml(v, k, level))
             else
+               -- Otherwise, the "HashMap" values are objects 
                local attrs = attrToXml(v._attr)
                v._attr = nil
                table.insert(xmltb, 
@@ -204,9 +210,10 @@ function xml2lua.toXml(tb, tableName, level)
             end
          end
       else
+         -- When values are primitives:
          -- If the type of the key is number, the value is an element from an array.
-         -- In this case, uses the array name (the name of the array) as the tag name.
-         if type(k) == "number" then
+         -- In this case, uses the array name as the tag name.
+         if type(k) == 'number' then
             k = tableName
          end
          table.insert(xmltb, spaces..'<'..k..'>'..tostring(v)..'</'..k..'>')
@@ -217,7 +224,7 @@ function xml2lua.toXml(tb, tableName, level)
       table.insert(xmltb, '</'..tableName..'>\n')
   end
 
-  return table.concat(xmltb, "\n")
+  return table.concat(xmltb, '\n')
 end
 
 return xml2lua
