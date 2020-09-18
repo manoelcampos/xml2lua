@@ -1,11 +1,11 @@
 package = "xml2lua"
-version = "1.4-1"
+version = "1.4-2"
 source = {
    url = "git://github.com/manoelcampos/xml2lua",
-   tag = "v1.4-1"
+   tag = "v1.4-2"
 }
 description = {
-   summary = "An XML Parser written entirely in Lua that works for Lua 5.1 to 5.3",
+   summary = "An XML Parser written entirely in Lua that works for Lua 5.1+",
    detailed = [[
    Enables parsing a XML string into a Lua Table and
    converting a Lua Table to an XML string.
@@ -14,7 +14,7 @@ description = {
    license = "MIT"
 }
 dependencies = {
-   "lua >= 5.1, <= 5.3"
+   "lua >= 5.1, <= 5.4"
 }
 build = {
   type = "builtin",
