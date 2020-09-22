@@ -178,6 +178,7 @@ end
 --@return a String representing the table content in XML
 function xml2lua.toXml(tb, tableName, level)
   level = level or 1
+  local firstLevel = level
   local spaces = string.rep(' ', level*2)
   tableName = tableName or ''
   local xmltb = (tableName ~= '' and level == 1) and {'<'..tableName..'>'} or {}
