@@ -1,7 +1,7 @@
 local function init()
     return {
         options = {commentNode=1, piNode=1, dtdNode=1, declNode=1},
-        current = { _children = {n=0}, _type = "ROOT" },
+        current = { _children = {}, _type = "ROOT" },
         _stack = {}
     }
 end
@@ -58,7 +58,7 @@ function dom:starttag(tag)
     local node = { _type = 'ELEMENT', 
                    _name = tag.name, 
                    _attr = tag.attrs, 
-                   _children = {n=0} 
+                   _children = {} 
                  }
             
     if self.root == nil then
