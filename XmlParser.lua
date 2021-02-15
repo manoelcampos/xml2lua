@@ -21,12 +21,12 @@
 --for that decimal value in the format &#code
 --@param code the decimal value to convert to its respective character
 local function decimalToHtmlChar(code)
-    local n = tonumber(code)
-    if n >= 0 and n < 256 then
-        return string.char(n)
-    else
-        return "&#"..code..";"
+    local num = tonumber(code)
+    if num >= 0 and num < 256 then
+        return string.char(num)
     end
+
+    return "&#"..code..";"
 end
 
 ---Converts the hexadecimal code of a character to its corresponding char
@@ -34,12 +34,12 @@ end
 --for that hexadecimal value in the format &#xCode
 --@param code the hexadecimal value to convert to its respective character
 local function hexadecimalToHtmlChar(code)
-    local n = tonumber(code, 16)
-    if n >= 0 and n < 256 then
-        return string.char(n)
-    else
-        return "&#x"..code..";"
+    local num = tonumber(code, 16)
+    if num >= 0 and num < 256 then
+        return string.char(num)
     end
+
+    return "&#x"..code..";"
 end
 
 local XmlParser = {
