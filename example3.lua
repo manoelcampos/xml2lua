@@ -7,6 +7,8 @@
 --@author Manoel Campos da Silva Filho - http://manoelcampos.com
 
 local xml2lua = require("xml2lua")
+print("xml2lua v" .. xml2lua._VERSION.."\n")
+
 --Uses a handler that converts the XML to a Lua table
 local handler = require("xmlhandler.tree")
 
