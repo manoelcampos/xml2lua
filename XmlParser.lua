@@ -323,6 +323,7 @@ local function parseNormalTag(self, xml, f)
         end
     else
         table.insert(self._stack, tag.name)
+
         if fexists(self.handler, 'starttag') then
             self.handler:starttag(tag, f.match, f.endMatch)
         end
