@@ -1,5 +1,5 @@
 package = "xml2lua"
-version = "v1.5-0"
+version = "1.5-0"
 source = {
    url = "git://github.com/manoelcampos/xml2lua",
    tag = "v1.5-0"
