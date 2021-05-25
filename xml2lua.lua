@@ -49,7 +49,7 @@
 --
 --@author Paul Chakravarti (paulc@passtheaardvark.com)
 --@author Manoel Campos da Silva Filho
-local xml2lua = {_VERSION = "v1.5-0"}
+local xml2lua = {_VERSION = "1.5-1"}
 local XmlParser = require("XmlParser")
 
 ---Recursivelly prints a table in an easy-to-ready format
