@@ -49,7 +49,7 @@
 --
 --@author Paul Chakravarti (paulc@passtheaardvark.com)
 --@author Manoel Campos da Silva Filho
-local xml2lua = {_VERSION = "1.5-1"}
+local xml2lua = {_VERSION = "1.5-2"}
 local XmlParser = require("XmlParser")
 
 ---Recursivelly prints a table in an easy-to-ready format
@@ -168,6 +168,32 @@ local function getFirstKey(tb)
    return tb
 end
 
+--- Parses a given entry in a lua table
+-- and inserts it as a XML string into a destination table.
+-- Entries in such a destination table will be concatenated to generated
+-- the final XML string from the origin table.
+-- @param xmltb the destination table where the XML string from the parsed key will be inserted
+-- @param tagName the name of the table field that will be used as XML tag name
+-- @param fieldValue a field from the lua table to be recursively parsed to XML or a primitive value that will be enclosed in a tag name
+-- @param level a int value used to include indentation in the generated XML from the table key
+local function parseTableKeyToXml(xmltb, tagName, fieldValue, level)
+    local spaces = string.rep(' ', level*2)
+
+    local strValue, attrsStr = "", ""
+    if type(fieldValue) == "table" then
+        attrsStr = attrToXml(fieldValue._attr)
+        fieldValue._attr = nil
+        --If after removing the _attr field there is just one element inside it,
+        --the tag was enclosing a single primitive value instead of other inner tags.
+        strValue = #fieldValue == 1 and spaces..tostring(fieldValue[1]) or xml2lua.toXml(fieldValue, tagName, level+1)
+        strValue = '\n'..strValue..'\n'..spaces
+    else
+        strValue = tostring(fieldValue)
+    end
+
+    table.insert(xmltb, spaces..'<'..tagName.. attrsStr ..'>'..strValue..'</'..tagName..'>')
+end
+
 ---Converts a Lua table to a XML String representation.
 --@param tb Table to be converted to XML
 --@param tableName Name of the table variable given to this function,
@@ -179,7 +205,6 @@ end
 function xml2lua.toXml(tb, tableName, level)
   level = level or 1
   local firstLevel = level
-  local spaces = string.rep(' ', level*2)
   tableName = tableName or ''
   local xmltb = (tableName ~= '' and level == 1) and {'<'..tableName..'>'} or {}
 
@@ -189,25 +214,17 @@ function xml2lua.toXml(tb, tableName, level)
          -- In this case, the name of the array is used as tag name for each element.
          -- So, we are parsing an array of objects, not an array of primitives.
          if type(k) == 'number' then
-            local attrs = attrToXml(v._attr)
-            v._attr = nil
-            table.insert(xmltb, 
-                spaces..'<'..tableName..attrs..'>\n'..xml2lua.toXml(v, tableName, level+1)..
-                '\n'..spaces..'</'..tableName..'>') 
-         else 
+            parseTableKeyToXml(xmltb, tableName, v, level)
+         else
             level = level + 1
             -- If the type of the first key of the value inside the table
             -- is a number, it means we have a HashTable-like structure,
             -- in this case with keys as strings and values as arrays.
             if type(getFirstKey(v)) == 'number' then 
-               table.insert(xmltb, xml2lua.toXml(v, k, level))
+               parseTableKeyToXml(xmltb, k, v, level)
             else
                -- Otherwise, the "HashTable" values are objects
-               local attrs = attrToXml(v._attr)
-               v._attr = nil
-               table.insert(xmltb, 
-                   spaces..'<'..k..attrs..'>\n'.. xml2lua.toXml(v, k, level+1)..
-                   '\n'..spaces..'</'..k..'>')
+               parseTableKeyToXml(xmltb, k, v, level)
             end
          end
       else
@@ -217,7 +234,7 @@ function xml2lua.toXml(tb, tableName, level)
          if type(k) == 'number' then
             k = tableName
          end
-         table.insert(xmltb, spaces..'<'..k..'>'..tostring(v)..'</'..k..'>')
+         parseTableKeyToXml(xmltb, k, v, level)
       end
   end
 
