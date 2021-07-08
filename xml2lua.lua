@@ -197,12 +197,12 @@ function xml2lua.toXml(tb, tableName, level)
          else 
             level = level + 1
             -- If the type of the first key of the value inside the table
-            -- is a number, it means we have a HashMap-like structcture,
+            -- is a number, it means we have a HashTable-like structure,
             -- in this case with keys as strings and values as arrays.
             if type(getFirstKey(v)) == 'number' then 
                table.insert(xmltb, xml2lua.toXml(v, k, level))
             else
-               -- Otherwise, the "HashMap" values are objects 
+               -- Otherwise, the "HashTable" values are objects
                local attrs = attrToXml(v._attr)
                v._attr = nil
                table.insert(xmltb, 
