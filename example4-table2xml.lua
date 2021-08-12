@@ -19,4 +19,4 @@ xml2lua.printable(people)
 print("\n------------------------------------------------------\n")
 
 print("XML Representation\n")
-print(xml2lua.toXml(people, "people"))
+print(xml2lua.toXml(people))
