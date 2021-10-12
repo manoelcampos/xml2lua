@@ -214,7 +214,9 @@ function xml2lua.toXml(tb, tableName, level)
          -- In this case, the name of the array is used as tag name for each element.
          -- So, we are parsing an array of objects, not an array of primitives.
          if type(k) == 'number' then
-            parseTableKeyToXml(xmltb, tableName, v, level)
+            for sub_k, sub_v in pairs(v) do
+              parseTableKeyToXml(xmltb, tableName, v, level)
+            end
          else
             level = level + 1
             -- If the type of the first key of the value inside the table
