@@ -215,7 +215,7 @@ function xml2lua.toXml(tb, tableName, level)
          -- So, we are parsing an array of objects, not an array of primitives.
          if type(k) == 'number' then
             for sub_k, sub_v in pairs(v) do
-              parseTableKeyToXml(xmltb, tableName, v, level)
+              parseTableKeyToXml(xmltb, tableName, sub_v, level)
             end
          else
             level = level + 1
