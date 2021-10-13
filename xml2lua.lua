@@ -206,7 +206,8 @@ function xml2lua.toXml(tb, tableName, level)
   level = level or 1
   local firstLevel = level
   tableName = tableName or ''
-  local xmltb = (tableName ~= '' and level == 1) and {'<'..tableName..'>'} or {}
+  local xmltb = (tableName ~= '' and level == 1) and {'<'..tableName..attrToXml(tb._attr)..'>'} or {}
+  tb._attr = nil
 
   for k, v in pairs(tb) do
       if type(v) == 'table' then
@@ -214,16 +215,19 @@ function xml2lua.toXml(tb, tableName, level)
          -- In this case, the name of the array is used as tag name for each element.
          -- So, we are parsing an array of objects, not an array of primitives.
          if type(k) == 'number' then
-            for sub_k, sub_v in pairs(v) do
-              parseTableKeyToXml(xmltb, tableName, sub_v, level)
-            end
+            parseTableKeyToXml(xmltb, tableName, v, level)
          else
             level = level + 1
             -- If the type of the first key of the value inside the table
             -- is a number, it means we have a HashTable-like structure,
             -- in this case with keys as strings and values as arrays.
-            if type(getFirstKey(v)) == 'number' then 
-               parseTableKeyToXml(xmltb, k, v, level)
+            if type(getFirstKey(v)) == 'number' then
+                for sub_k, sub_v in pairs(v) do
+                    if sub_k ~= '_attr' then
+                      local sub_v_with_attr = type(v._attr) == 'table' and { sub_v, _attr = v._attr } or sub_v
+                      parseTableKeyToXml(xmltb, k, sub_v_with_attr, level)
+                    end
+                end
             else
                -- Otherwise, the "HashTable" values are objects
                parseTableKeyToXml(xmltb, k, v, level)
