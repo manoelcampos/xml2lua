@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 
 ---Sample application showing how to convert a Lua Table to an XML representation
---@author Manoel Campos da Silva Filho - http://manoelcampos.com
+--@author @DusanNikolicc11 
 
 local xml2lua = require("xml2lua")
 print("xml2lua v" .. xml2lua._VERSION.."\n")
@@ -67,3 +67,31 @@ print("\n------------------------------------------------------\n")
 
 print("XML Representation\n")
 print(xml2lua.toXml(body))
+
+--[[
+Expected output:
+<xs:complexType name="complexType" abstract="true">
+    <xs:complexContent>
+        <xs:extension base="xs:annotated">
+            <xs:attribute>
+                <xs:annotation>
+                     <xs:documentation>Will be restricted to required or forbidden</xs:documentation>
+                 </xs:annotation>
+             </xs:attribute>
+             <xs:attribute name="mixed" type="xs:boolean" default="false" use="optional">
+                 <xs:annotation>
+                     <xs:documentation>Not allowed if simpleContent child is chosen. May be overriden by etting on complexContent child</xs:documentation>
+                 </xs:annotation>
+             </xs:attribute>
+             <xs:attribute name="abstract" type="xs:boolean" default="false" use="optional">
+             </xs:attribute>
+             <xs:attribute name="final" type="xs:derivationSet">
+             </xs:attribute>
+             <xs:attribute name="block" type="xs:derivationSet">
+             </xs:attribute>
+             <xs:group ref="xs:complexTypeModel">
+             </xs:group>
+         </xs:extension>
+    </xs:complexContent>
+</xs:complexType>
+]]
