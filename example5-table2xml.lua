@@ -78,7 +78,7 @@ Expected output:
         </DataDefinition>
         <WavelengthData>
             <LayerNumber>System</LayerNumber>
-            <Wavelength unit="Integral">Visible</Wavelength>
+            <Wavelength type="Integral">Visible</Wavelength>
                 <SourceSpectrum>CIE Illuminant D65 Inm.ssp</SourceSpectrum>
                 <DetectorSpectrum>ASTM E308 1931 Y.dsp</DetectorSpectrum>
                 <WavelengthDataBlock>
