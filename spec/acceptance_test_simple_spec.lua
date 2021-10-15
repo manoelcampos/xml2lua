@@ -24,8 +24,8 @@ local simple_xml_with_attributes = [[<people>
 </people>
 ]]
 
-describe("Basic structure with attributes Acceptance Tests", function()
-  describe("From XML to lua table", function()
+describe("Basic structure with attributes Acceptance Tests ::", function()
+  describe("From XML to lua table ::", function()
     it("parses tags and attributes", function()
       local parser = xml2lua.parser(handler)
       parser:parse(simple_xml_with_attributes)
@@ -47,7 +47,7 @@ describe("Basic structure with attributes Acceptance Tests", function()
     end)
   end)
 
-  describe("From lua table to XML", function()
+  describe("From lua table to XML ::", function()
     it("parses table members and _attr as attributes", function()
       local parsedXml = xml2lua.toXml(simple_lua_with_attributes, "people")
 

@@ -31,8 +31,8 @@ local xml = [[
 </menus>
 ]]
 
-describe("Complex Repeated Tags with same structure Acceptance Tests", function()
-    describe("From XML to lua table", function()
+describe("Complex Repeated Tags with same structure Acceptance Tests ::", function()
+    describe("From XML to lua table ::", function()
         it("parses tags and attributes", function()
             local parser = xml2lua.parser(handler)
             parser:parse(xml)
@@ -59,7 +59,7 @@ describe("Complex Repeated Tags with same structure Acceptance Tests", function(
         end)
     end)
 
-    describe("From lua table to XML", function()
+    describe("From lua table to XML ::", function()
         it("parses table members and _attr as attributes", function()
             local parsedXml = xml2lua.toXml(luaTable)
             --print("\nParsed menus XML:\n", parsedXml)
