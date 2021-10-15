@@ -1,0 +1,19 @@
+name: Publish to luarocks.org
+
+on:
+  push:
+    tags:
+      - 'v*.*-*'
+
+jobs:
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish rock to luarocks.org
+        run: |
+          make test
+          docker-compose run --rm upload
+        env:
+          LUA_ROCKS_API_KEY: ${{ secrets.LUA_ROCKS_API_KEY }}
