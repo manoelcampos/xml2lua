@@ -5,6 +5,7 @@ local simple_lua_with_attributes = {
   {age=42, name="Manoela", salary=42.1, city="Brasília-DF", _attr={ type="legal" }, music={_attr={like="true"}} },
   {age=42, name="Manoel", salary=42.1, city="Palmas-TO", _attr={ type="natural" }, music={_attr={like="true"}} },
 }
+
 local simple_xml_with_attributes = [[<people>
   <person type="legal">
     <age>42</age>
@@ -23,7 +24,7 @@ local simple_xml_with_attributes = [[<people>
 </people>
 ]]
 
-describe("Acceptance tests", function()
+describe("Basic structure with attributes Acceptance Tests", function()
   describe("From XML to lua table", function()
     it("parses tags and attributes", function()
       local parser = xml2lua.parser(handler)
@@ -48,11 +49,11 @@ describe("Acceptance tests", function()
 
   describe("From lua table to XML", function()
     it("parses table members and _attr as attributes", function()
-      local string_xml = xml2lua.toXml(simple_lua_with_attributes, "people")
+      local parsedXml = xml2lua.toXml(simple_lua_with_attributes, "people")
 
-      assert.is.truthy(string.find(string_xml, "Manoela"))
-      assert.is.truthy(string.find(string_xml, "Manoel"))
-      assert.is.falsy(string.find(string_xml, "Manuca"))
+      assert.is.truthy(string.find(parsedXml, "Manoela"))
+      assert.is.truthy(string.find(parsedXml, "Manoel"))
+      assert.is.falsy(string.find(parsedXml, "Manuca"))
     end)
   end)
 end)
