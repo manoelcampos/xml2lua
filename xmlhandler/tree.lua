@@ -86,8 +86,7 @@ function tree:reduce(node, key, parent)
             self:reduce(v,k,node)
         end
     end
-    if #node == 1 and not size_greater_than(node, 1) and not self.options.noreduce[key] and 
-        node._attr == nil then
+    if #node == 1 and not size_greater_than(node, 1) and not self.options.noreduce[key] then
         parent[key] = node[1]
     end
 end
