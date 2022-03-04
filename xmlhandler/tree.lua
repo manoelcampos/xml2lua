@@ -71,6 +71,13 @@ function tree:new()
     return obj
 end
 
+local function size_greater_than(t, n)
+    for _, _ in pairs(t) do
+        if 0 == n then return true end
+        n = n - 1
+    end
+end
+
 --- Recursively removes redundant vectors for nodes
 -- with single child elements
 function tree:reduce(node, key, parent)
@@ -79,7 +86,7 @@ function tree:reduce(node, key, parent)
             self:reduce(v,k,node)
         end
     end
-    if #node == 1 and not self.options.noreduce[key] and 
+    if #node == 1 and not size_greater_than(node, 1) and not self.options.noreduce[key] and 
         node._attr == nil then
         parent[key] = node[1]
     end
