@@ -19,5 +19,7 @@
   <person type="legal">
     <name>University of Brasília</name>
     <city>Brasília-DF</city>
-  </person>  
+    <empty></empty>
+    <void/>
+  </person>
 </people>

@@ -62,7 +62,7 @@ function dom:starttag(tag)
                    _children = {}
                  }
 
-    if self.root == nil then
+    if not self.root then
         self.root = node
     end
 
@@ -76,7 +76,7 @@ end
 -- @param tag a {name, attrs} table
 -- where name is the name of the tag and attrs
 -- is a table containing the attributes of the tag
-function dom:endtag(tag, s)
+function dom:endtag(tag)
     --Table representing the containing tag of the current tag
     local prev = self._stack[#self._stack]
 
@@ -86,9 +86,18 @@ function dom:endtag(tag, s)
 
     table.remove(self._stack)
     self.current = self._stack[#self._stack]
-	if (self.current == nil) then
-		self.current = { _children = {n=0}, _type = "ROOT" };
-	end
+    if not self.current then
+       local node = { _children = {}, _type = "ROOT" }
+       if self.decl then
+	  table.insert(node._children, self.decl)
+	  self.decl = nil
+       end
+       if self.root then
+	  table.insert(node._children, self.root)
+	  self.root = node
+       end
+       self.current = node
+    end
 end
 
 ---Parses a tag content.
@@ -131,11 +140,12 @@ end
 -- is a table containing the attributes of the tag
 function dom:decl(tag)
     if self.options.declNode then
-        local node = { _type = "DECL",
+       local node = { _type = "DECL",
 		       _name = tag.name,
 		       _attr = tag.attrs,
                     }
-        table.insert(self.current._children, node)
+       self.decl = node
+       --table.insert(self.current._children, node)
     end
 end
 
@@ -166,7 +176,7 @@ end
 -- @param tab table with XML attribute pairs. key and value are supposed to be strings.
 -- @return a string.
 local function attrsToStr(tab)
-   if tab == nil then
+   if not tab then
       return ''
    end
    if type(tab) == 'table' then
@@ -195,10 +205,10 @@ end
 -- @param node a Node object (table) of the xml2lua DOM tree structure.
 -- @return a string.
 local function toXmlStr(node, indentLevel)
-   if node == nil then
+   if not node then
       return 'BUG:node==nil'
    end
-   if node._type == nil then
+   if not node._type then
       return 'BUG:node._type==nil'
    end
 
@@ -216,7 +226,7 @@ local function toXmlStr(node, indentLevel)
    elseif node._type == 'ELEMENT' then
       local s = indent .. '<' .. node._name .. attrsToStr(node._attr)
 
-      if node._children == nil then
+      if not node._children then
 	 return s .. '/>\n'
       end
 
@@ -224,7 +234,7 @@ local function toXmlStr(node, indentLevel)
 
       for i, n in pairs(node._children) do
 	 local xx = toXmlStr(n, indentLevel+2)
-	 if xx == nil then
+	 if not xx then
 	    print('BUG:xx==nil')
 	 else
 	    s = s .. xx
@@ -237,9 +247,10 @@ local function toXmlStr(node, indentLevel)
       return indent .. xmlEscape(node._text) .. '\n'
    elseif node._type == 'COMMENT' then
       return indent .. '<!--' .. node._text .. '-->\n'
-   elseif node._type == 'PI' or
-          node._type == 'DECL' then
+   elseif node._type == 'PI' then
       return indent .. '<?' .. node._name .. ' ' .. node._attr._text .. '?>\n'
+   elseif node._type == 'DECL' then
+      return indent .. '<?' .. node._name .. attrsToStr(node._attr) .. '?>\n'
    elseif node._type == 'DTD' then
       return indent .. '<!--DTD not implemented-->\n' -- TODO
    end
@@ -247,7 +258,7 @@ local function toXmlStr(node, indentLevel)
 end
 
 function dom:toXml(node)
-   return toXmlStr(node, -2)
+   return toXmlStr(node, -4)
 end
 
 ---Parses CDATA tag content.
