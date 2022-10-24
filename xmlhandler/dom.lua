@@ -153,6 +153,103 @@ function dom:dtd(tag)
     end
 end
 
+--- XML escape characters for a TEXT node.
+-- @param s a string
+-- @return @p s XML escaped.
+local function xmlEscape(s)
+   s = string.gsub(s, '&', '&amp;')
+   s = string.gsub(s, '<', '&lt;')
+   return string.gsub(s, '>', '&gt;')
+end
+
+--- return a string of XML attributes
+-- @param tab table with XML attribute pairs. key and value are supposed to be strings.
+-- @return a string.
+local function attrsToStr(tab)
+   if tab == nil then
+      return ''
+   end
+   if type(tab) == 'table' then
+      local s = ''
+      for n,v in pairs(tab) do
+	 -- determine a safe quote character
+	 local val = tostring(v)
+	 local found_single_quote = string.find(val, "'")
+	 local found_double_quote = string.find(val, '"')
+	 local quot = '"'
+	 if found_single_quote and found_double_quote then
+	    -- XML escape both quote characters
+	    val = string.gsub(val, '"', '&quot;')
+	    val = string.gsub(val, "'", '&apos;')
+	 elseif found_double_quote then
+	    quot = "'"
+	 end
+	 s = ' ' .. tostring(n) .. '=' .. quot .. val .. quot
+      end
+      return s
+   end
+   return 'BUG:unknown type:' .. type(tab)
+end
+
+--- return a XML formatted string of @p node.
+-- @param node a Node object (table) of the xml2lua DOM tree structure.
+-- @return a string.
+local function toXmlStr(node, indentLevel)
+   if node == nil then
+      return 'BUG:node==nil'
+   end
+   if node._type == nil then
+      return 'BUG:node._type==nil'
+   end
+
+   local indent = ''
+   for i=0, indentLevel+1, 1 do
+      indent = indent .. ' '
+   end
+
+   if node._type == 'ROOT' then
+      local s = ''
+      for i, n in pairs(node._children) do
+	 s = s .. toXmlStr(n, indentLevel+2)
+      end
+      return s
+   elseif node._type == 'ELEMENT' then
+      local s = indent .. '<' .. node._name .. attrsToStr(node._attr)
+
+      if node._children == nil then
+	 return s .. '/>\n'
+      end
+
+      s = s .. '>\n'
+
+      for i, n in pairs(node._children) do
+	 local xx = toXmlStr(n, indentLevel+2)
+	 if xx == nil then
+	    print('BUG:xx==nil')
+	 else
+	    s = s .. xx
+	 end
+      end
+
+      return s .. indent .. '</' .. node._name .. '>\n'
+
+   elseif node._type == 'TEXT' then
+      return indent .. xmlEscape(node._text) .. '\n'
+   elseif node._type == 'COMMENT' then
+      return indent .. '<!--' .. node._text .. '-->\n'
+   elseif node._type == 'PI' or
+          node._type == 'DECL' then
+      return indent .. '<?' .. node._name .. ' ' .. node._attr._text .. '?>\n'
+   elseif node._type == 'DTD' then
+      return indent .. '<!--DTD not implemented-->\n' -- TODO
+   end
+   return 'BUG:unknown type:' .. tostring(node._type)
+end
+
+function dom:toXml(node)
+   return toXmlStr(node, -2)
+end
+
 ---Parses CDATA tag content.
 dom.cdata = dom.text
 dom.__index = dom
