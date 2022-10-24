@@ -80,8 +80,8 @@ local xml = [[
   <person type="legal">
     <name>University of Brasília</name>
     <city>Brasília-DF</city>
-  </person>  
-</people>    
+  </person>
+</people>
 ]]
 
 --Instantiates the XML parser
@@ -121,7 +121,7 @@ Execute `lua testxml.lua -help` on the terminal for more details.
 
 == Running tests
 
-=== Requeriments
+=== Requirements
 
 You must have https://docs.docker.com/compose/install/[installed docker and docker compose].
 
