@@ -6,7 +6,7 @@ local xml2lua = require("xml2lua")
 local dom = require("xmlhandler.dom")
 local parser = xml2lua.parser(dom)
 parser:parse(io.read("*all"))
-if dom.root == nil then
+if not dom.root then
    print("parsing as XML failed")
 else
    print(dom:toXml(dom.root))

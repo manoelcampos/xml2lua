@@ -92,6 +92,10 @@ function dom:endtag(tag)
 	  table.insert(node._children, self.decl)
 	  self.decl = nil
        end
+       if self.dtd then
+	  table.insert(node._children, self.dtd)
+	  self.dtd = nil
+       end
        if self.root then
 	  table.insert(node._children, self.root)
 	  self.root = node
@@ -139,28 +143,25 @@ end
 -- where name is the name of the tag and attrs
 -- is a table containing the attributes of the tag
 function dom:decl(tag)
-    if self.options.declNode then
-       local node = { _type = "DECL",
-		       _name = tag.name,
-		       _attr = tag.attrs,
-                    }
-       self.decl = node
-       --table.insert(self.current._children, node)
-    end
+   if self.options.declNode then
+      self.decl = { _type = "DECL",
+		    _name = tag.name,
+		    _attr = tag.attrs,
+      }
+   end
 end
 
 ---Parses a DTD tag.
--- @param tag a {name, attrs} table
+-- @param tag a {name, value} table
 -- where name is the name of the tag and attrs
 -- is a table containing the attributes of the tag
 function dom:dtd(tag)
-    if self.options.dtdNode then
-        local node = { _type = "DTD",
-                       _name = tag.name,
-                       _attr = tag.attrs,
-                     }
-        table.insert(self.current._children, node)
-    end
+   if self.options.dtdNode then
+      self.dtd = { _type = "DTD",
+		   _name = tag.name,
+		   _text = tag.value
+      }
+   end
 end
 
 --- XML escape characters for a TEXT node.
@@ -254,11 +255,14 @@ local function toXmlStr(node, indentLevel)
    elseif node._type == 'DECL' then
       return indent .. '<?' .. node._name .. attrsToStr(node._attr) .. '?>\n'
    elseif node._type == 'DTD' then
-      return indent .. '<!--DTD not implemented-->\n' -- TODO
+      return indent .. '<!' .. node._name .. ' ' .. node._text .. '>\n'
    end
    return 'BUG:unknown type:' .. tostring(node._type)
 end
 
+---create a string in XML format from the dom root object @p node.
+-- @param node a root object, typically created with `dom` XML parser handler.
+-- @return a string, XML formatted.
 function dom:toXml(node)
    return toXmlStr(node, -4)
 end

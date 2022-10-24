@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE person [
+   <!ELEMENT person (name,city,empty,void)>
+   <!ELEMENT name (#PCDATA)>
+   <!ELEMENT city (#PCDATA)>
+   <!ELEMENT void (#PCDATA)>
+   <!ELEMENT empty (#PCDATA)>
+]>
 <people>
   <person type="natural">
     <![CDATA[
