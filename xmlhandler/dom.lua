@@ -226,7 +226,9 @@ local function toXmlStr(node, indentLevel)
    elseif node._type == 'ELEMENT' then
       local s = indent .. '<' .. node._name .. attrsToStr(node._attr)
 
-      if not node._children then
+      -- check if ELEMENT has no children
+      if not node._children or
+	 #node._children == 0 then
 	 return s .. '/>\n'
       end
 
