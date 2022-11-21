@@ -157,7 +157,7 @@ end
 --@param s String containing tag text
 --@return a {name, attrs} table
 -- where name is the name of the tag and attrs 
--- is a table containing the atributtes of the tag
+-- is a table containing the attributes of the tag
 local function parseTag(self, s)
     local tag = {
             name = string.gsub(s, self._TAG, '%1'),
