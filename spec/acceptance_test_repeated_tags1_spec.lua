@@ -4,8 +4,10 @@ local handler = require("xmlhandler.tree")
 local luaTable = {
     tag = {
         array = {
-            item = { _attr = { myattr = "something1" } },
-            item = { _attr = { myattr = "something2" } },
+            item = {
+                { _attr = { myattr = "something1" } },
+                { _attr = { myattr = "something2" } }
+            }
         }
     }
 }
@@ -45,7 +47,7 @@ describe("Simple Repeated Tags with same structure Acceptance Tests ::", functio
             print("\nParsed array XML:\n", parsedXml, "\n")
 
             assert.is.truthy(string.find(parsedXml, '<item myattr="something1"'), "there should have an item with a 'something1' myattr value")
-            assert.is.truthy(string.find(parsedXml, '<item myattr="something1"'), "there should have an item with a 'something2' myattr value")
+            assert.is.truthy(string.find(parsedXml, '<item myattr="something2"'), "there should have an item with a 'something2' myattr value")
             assert.is.falsy(string.find(parsedXml, "non-existent"))
         end)
     end)
