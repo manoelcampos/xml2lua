@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- A more complex people XML with DOCTYPE and CDATA tags -->
+
 <!DOCTYPE person [
    <!ELEMENT person (name,city,empty,void)>
    <!ELEMENT name (#PCDATA)>
@@ -13,8 +15,6 @@
     such as <tag>message</tag>.
     Its content is extracted but not processed.
     ]]>  
-    
-    <!-- Just an example comment that will be ignored by the tree handler and processed by the other ones. -->
     
     <name>Manoel</name>
     <city>Palmas-TO</city>

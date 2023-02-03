@@ -9,11 +9,11 @@ print("xml2lua v" .. xml2lua._VERSION.."\n")
 --Uses a handler that converts the XML to a Lua table
 local handler = require("xmlhandler.tree")
 
------------------------  people.xml parse code -----------------------
-print("people.xml")
+-----------------------  people1.xml parse code -----------------------
+print("people1.xml")
 local peopleHandler = handler:new()
 local peopleParser = xml2lua.parser(peopleHandler)
-peopleParser:parse(xml2lua.loadFile("people.xml"))
+peopleParser:parse(xml2lua.loadFile("people1.xml"))
 xml2lua.printable(peopleHandler.root)
 
 -----------------------  books.xml parse code -----------------------
