@@ -153,7 +153,7 @@ end
 
 ---Parses a DTD tag.
 -- @param tag a {name, value} table
--- where name is the name of the tag and attrs
+-- where name is the name of the tag and value
 -- is a table containing the attributes of the tag
 function dom:dtd(tag)
    if self.options.dtdNode then
