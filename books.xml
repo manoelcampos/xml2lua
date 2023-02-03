@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <!-- Source: https://msdn.microsoft.com/en-us/library/ms762271(v=vs.85).aspx -->
+<!DOCTYPE name PUBLIC "-//Beginning XML//DTD Address Example//EN">
 <catalog>
    <book>
       <author>Gambardella, Matthew</author>

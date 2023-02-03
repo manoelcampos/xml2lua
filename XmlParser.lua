@@ -43,7 +43,7 @@ local function hexadecimalToHtmlChar(code)
 end
 
 local XmlParser = {
-    -- Private attribures/functions
+    -- Private attributes/functions
     _XML        = '^([^<]*)<(%/?)([^>]-)(%/?)>',
     _ATTR1      = '([%w-:_]+)%s*=%s*"(.-)"',
     _ATTR2      = '([%w-:_]+)%s*=%s*\'(.-)\'',
@@ -56,10 +56,10 @@ local XmlParser = {
     _WS         = '^%s*$',
     _DTD1       = '<!DOCTYPE%s+(.-)%s+(SYSTEM)%s+["\'](.-)["\']%s*(%b[])%s*>',
     _DTD2       = '<!DOCTYPE%s+(.-)%s+(PUBLIC)%s+["\'](.-)["\']%s+["\'](.-)["\']%s*(%b[])%s*>',
-    --_DTD3       = '<!DOCTYPE%s+(.-)%s*(%b[])%s*>',
-    _DTD3       = '<!DOCTYPE%s.->',
+    _DTD3       = '<!DOCTYPE%s+(.-)%s+%[%s+.-%]>', -- Inline DTD Schema
     _DTD4       = '<!DOCTYPE%s+(.-)%s+(SYSTEM)%s+["\'](.-)["\']%s*>',
     _DTD5       = '<!DOCTYPE%s+(.-)%s+(PUBLIC)%s+["\'](.-)["\']%s+["\'](.-)["\']%s*>',
+    _DTD6       = '<!DOCTYPE%s+(.-)%s+(PUBLIC)%s+["\'](.-)["\']%s*>',
 
     --Matches an attribute with non-closing double quotes (The equal sign is matched non-greedly by using =+?)
     _ATTRERR1   = '=+?%s*"[^"]*$',
@@ -246,7 +246,7 @@ end
 
 local function _parseDtd(self, xml, pos)
     -- match,endMatch,root,type,name,uri,internal
-    local dtdPatterns = {self._DTD1, self._DTD2, self._DTD3, self._DTD4, self._DTD5}
+    local dtdPatterns = {self._DTD1, self._DTD2, self._DTD3, self._DTD4, self._DTD5, self._DTD6}
 
     for _, dtd in pairs(dtdPatterns) do
         local m,e,r,t,n,u,i = string.find(xml, dtd, pos)

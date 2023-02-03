@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <people>
   <person type="natural">
-    <![CDATA[
-    Just a CDATA tag that may contain anything, including XML code,
-    such as <tag>message</tag>.
-    Its content is extracted but not processed.
-    ]]>  
-    
-    <!-- Just an example comment that will be ignored by the tree handler and processed by the other ones. -->
+    <!-- Just an example comment that will be ignored by the tree
+    handler and processed by the other ones. -->
     
     <name>Manoel</name>
     <city>Palmas-TO</city>
@@ -19,5 +14,7 @@
   <person type="legal">
     <name>University of Brasília</name>
     <city>Brasília-DF</city>
-  </person>  
+    <empty></empty>
+    <void/>
+  </person>
 </people>

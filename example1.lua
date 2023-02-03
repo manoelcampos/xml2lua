@@ -10,7 +10,7 @@ print("xml2lua v" .. xml2lua._VERSION.."\n")
 local handler = require("xmlhandler.tree")
 
 
-local xml = xml2lua.loadFile("people.xml")
+local xml = xml2lua.loadFile("people1.xml")
 
 --Instantiates the XML parser
 local parser = xml2lua.parser(handler)

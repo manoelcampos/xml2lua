@@ -7,4 +7,7 @@ test:
 lint:
 	docker-compose run --rm lint
 
-.PHONY: lint test all
+clean:
+	find . -name '*~' -delete
+
+.PHONY: lint test all example5 clean

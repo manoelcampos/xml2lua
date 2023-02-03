@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A more complex people XML with DOCTYPE and CDATA tags -->
+
+<!DOCTYPE person [
+   <!ELEMENT person (name,city,empty,void)>
+   <!ELEMENT name (#PCDATA)>
+   <!ELEMENT city (#PCDATA)>
+   <!ELEMENT void (#PCDATA)>
+   <!ELEMENT empty (#PCDATA)>
+]>
+<people>
+  <person type="natural">
+    <![CDATA[
+    Just a CDATA tag that may contain anything, including XML code,
+    such as <tag>message</tag>.
+    Its content is extracted but not processed.
+    ]]>  
+    
+    <name>Manoel</name>
+    <city>Palmas-TO</city>
+  </person>
+  <person type="natural">
+    <name>Breno</name>
+    <city>Palmas-TO</city>
+  </person>
+  <person type="legal">
+    <name>University of Brasília</name>
+    <city>Brasília-DF</city>
+    <empty></empty>
+    <void/>
+  </person>
+</people>
