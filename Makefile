@@ -7,10 +7,6 @@ test:
 lint:
 	docker-compose run --rm lint
 
-example5:
-	lua example5.lua < people.xml
-	lua example5.lua < books.xml
-
 clean:
 	find . -name '*~' -delete
 
