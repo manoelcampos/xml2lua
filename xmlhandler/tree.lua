@@ -80,7 +80,7 @@ function tree:reduce(node, key, parent)
         end
     end
     if #node == 1 and not self.options.noreduce[key] and 
-        node._attr == nil then
+            node._attr == nil and type(parent) == "table" then
         parent[key] = node[1]
     end
 end
