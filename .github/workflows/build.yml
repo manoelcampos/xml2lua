@@ -1,0 +1,20 @@
+name: build
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      LUA_ROCKS_API_KEY: ${{ secrets.LUA_ROCKS_API_KEY }}
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker-compose build test
+    - name: Run tests
+      run: docker-compose run --rm test
