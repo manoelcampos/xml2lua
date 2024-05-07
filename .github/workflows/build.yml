@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      LUA_ROCKS_API_KEY: ${{ secrets.LUA_ROCKS_API_KEY }}
 
     steps:
     - uses: actions/checkout@v4
