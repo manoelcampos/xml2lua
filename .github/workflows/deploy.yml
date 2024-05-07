@@ -14,12 +14,14 @@ jobs:
     uses: ./.github/workflows/build.yml
   deploy:
     name: Deploy rock to luarocks.org
+    env:
+      LUA_ROCKS_API_KEY: ${{ secrets.LUA_ROCKS_API_KEY }}
     needs: [ build ] # build must pass to deploy
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-    - name: Deploy to luarocks.org
+    - name: Build the Docker luarocks upload image
       run: docker-compose build upload
-      env:
-          LUA_ROCKS_API_KEY: ${{ secrets.LUA_ROCKS_API_KEY }}        
+    - name: Deploy to luarocks.org
+      run: docker-compose run --rm upload
