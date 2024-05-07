@@ -1,4 +1,4 @@
-FROM nickblah/lua:5.4-luarocks-ubuntu
+FROM nickblah/lua:5.4.6-luarocks-ubuntu
 
 RUN apt-get update -qq > /dev/null \
     && apt-get install build-essential git zip -qq > /dev/null \
