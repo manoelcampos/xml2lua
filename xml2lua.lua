@@ -235,6 +235,18 @@ function xml2lua.isTableEmpty(obj)
   return true
 end
 
+function xml2lua.isSingleValue(obj)
+  local have_value = false
+  for k, _ in pairs(obj) do
+    if (k == '_val') then
+      have_value = true
+    elseif (k ~= '_attr') then
+      return false
+    end
+  end
+  return have_value
+end
+
 function xml2lua.parseTableToXml(obj, tagName, level)
   if (tagName ~= '_attr') then
     if (type(obj) == 'table') then
@@ -244,6 +256,8 @@ function xml2lua.parseTableToXml(obj, tagName, level)
         end
       elseif xml2lua.isTableEmpty(obj) then
         xml2lua.addTagValueAttr(tagName, "", obj._attr, level)
+      elseif xml2lua.isSingleValue(obj) then
+        xml2lua.addTagValueAttr(tagName, obj._val, obj._attr, level)
       else
         xml2lua.startTag(tagName, obj._attr, level)
         for tag, value in pairs(obj) do
