@@ -87,6 +87,8 @@ function xml2lua.parser(handler)
     local options = {
             --Indicates if whitespaces should be striped or not
             stripWS = 1,
+            --Should we replace hyphens with underscores in tag names as we parse
+            subHyphens = 0,
             expandEntities = 1,
             errorHandler = function(errMsg, pos)
                 error(string.format("%s [char=%d]\n", errMsg or "Parse Error", pos))
