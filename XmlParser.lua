@@ -159,8 +159,12 @@ end
 -- where name is the name of the tag and attrs 
 -- is a table containing the attributes of the tag
 local function parseTag(self, s)
+    local tag_name = string.gsub(s, self._TAG, '%1')
+    if self.options.subHyphens then
+        tag_name = string.gsub(tag_name, '-', '_')
+    end
     local tag = {
-            name = string.gsub(s, self._TAG, '%1'),
+            name = tag_name,
             attrs = {}
           }            
 
