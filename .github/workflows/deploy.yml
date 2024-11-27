@@ -1,0 +1,27 @@
+name: deploy
+
+# How to fire this workflow
+## After you are ready to deploy your rock, you need create a git tag in the format vX.Y-Z
+## git tag vX.Y-Z && git push --tags
+
+on:
+  push:
+    tags:
+      - 'v*.*-*'
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+  deploy:
+    name: Deploy rock to luarocks.org
+    env:
+      LUA_ROCKS_API_KEY: ${{ secrets.LUA_ROCKS_API_KEY }}
+    needs: [ build ] # build must pass to deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker luarocks upload image
+      run: docker-compose build upload
+    - name: Deploy to luarocks.org
+      run: docker-compose run --rm upload

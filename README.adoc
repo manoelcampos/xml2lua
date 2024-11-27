@@ -2,7 +2,7 @@
 :numbered:
 :unsafe:
 
-= xml2lua image:https://travis-ci.com/manoelcampos/xml2lua.svg?branch=master[Build Status,link=https://travis-ci.com/manoelcampos/xml2lua] image:http://img.shields.io/badge/license-MIT-brightgreen.svg[MIT license,link=http://opensource.org/licenses/MIT] image:https://img.shields.io/luarocks/v/manoelcampos/xml2lua[LuaRocks,link=https://luarocks.org/modules/manoelcampos/xml2lua]
+= xml2lua image:https://img.shields.io/github/actions/workflow/status/manoelcampos/xml2lua/build.yml[GitHub Actions Workflow Status] image:http://img.shields.io/badge/license-MIT-brightgreen.svg[MIT license,link=http://opensource.org/licenses/MIT] image:https://img.shields.io/luarocks/v/manoelcampos/xml2lua[LuaRocks,link=https://luarocks.org/modules/manoelcampos/xml2lua]
 
 pass:[<a href="https://buymeacoff.ee/manoelcampos" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 30px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>]
 

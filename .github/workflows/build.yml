@@ -1,0 +1,20 @@
+name: build
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+  workflow_call:  # enable calling this workflow inside other (such as the deploy one)
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      LUA_ROCKS_API_KEY: ${{ secrets.LUA_ROCKS_API_KEY }}
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker test image
+      run: docker-compose build test
+    - name: Run tests
+      run: docker-compose run --rm test
