@@ -8,8 +8,8 @@ print("xml2lua v" .. xml2lua._VERSION.."\n")
 
 local people = {
     person = {
-        {_attr={type="natural"}, name="Manoel", city="Palmas-TO"},
-        {_attr={type="natural"}, name="Breno", city="Palmas-TO"},
+        {_attr={type="natural"}, name= {_val = "Manoel", _attr = {tt = "bb"}}, city="Palmas-TO"},
+        {_attr={type="natural"}, name= {_val = "Breno"}, city="Palmas-TO"},
         {_attr={type="legal"}, name="University of Brasília", city="Brasília-DF"}
     }
 }
